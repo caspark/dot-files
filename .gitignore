@@ -2,3 +2,10 @@
 # ignore everything by default
 # we'll add the things we care about with `git add -f`
 *
+
+# for some directories, we know we want to track everything
+# sadly they have to be unignored twice: https://stackoverflow.com/a/5285539/775982
+!/dot-files/
+!/dot-files/*
+!/.config/fish/
+!/.config/fish/*
