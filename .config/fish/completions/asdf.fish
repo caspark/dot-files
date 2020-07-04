@@ -1,0 +1,1 @@
+/home/ckrieger/.asdf/completions/asdf.fish
