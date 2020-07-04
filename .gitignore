@@ -1,0 +1,4 @@
+# home directory repo
+# ignore everything by default
+# we'll add the things we care about with `git add -f`
+*
