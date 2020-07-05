@@ -1,0 +1,30 @@
+Packages that need to be installed for this config to work:
+
+#+BEGIN_SRC shell
+sudo apt install direnv isort ubuntu-wsl wordnet libvterm-bin shellcheck pandoc xdg-utils ispell sqlite3
+cargo install fd-find ripgrep
+#+END_SRC
+
+Things to try out:
+
+[ ] https://github.com/redguardtoo/evil-matchit
+[ ] https://github.com/willghatch/emacs-repeatable-motion
+[ ] https://github.com/ChillarAnand/real-auto-save
+[ ] https://orgro.org/
+[ ] https://github.com/politza/pdf-tools - this may already be part of doom
+
+
+Resources:
+
+https://github.com/noctuid/evil-guide
+https://github.com/tpope/vim-surround
+http://steve-yegge.blogspot.com/2008/01/emergency-elisp.html
+https://github.com/caiorss/Emacs-Elisp-Programming/blob/master/Elisp_Programming.org
+https://with-emacs.com/archive.html
+https://www.adelbertc.com/posts/2020-01-06-emacs-rls-nix.html
+https://github.com/target/lorri/
+
+
+#+BEGIN_SRC elisp
+(call-process "wslview" nil t nil "http://google.com")
+#+End_SRC

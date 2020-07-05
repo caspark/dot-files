@@ -9,5 +9,7 @@
 !/.config/
 !/.config/fish/
 !/.config/fish/**
+!/.doom.d/
+!/.doom.d/**
 !/dotmore/
 !/dotmore/**
