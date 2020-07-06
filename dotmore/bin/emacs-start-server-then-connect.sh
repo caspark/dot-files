@@ -6,4 +6,4 @@ sleep 2 # wait for emacs to start
 disown
 
 echo "Attempting to connect to newly created emacs..."
-emacsclient --server-file="$HOME/.emacs.d/server/server" $@
+exec emacsclient --server-file="$HOME/.emacs.d/server/server" $@

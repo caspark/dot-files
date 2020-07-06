@@ -1,10 +1,11 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR --export DISABLE_MINI_PROFILER:true
-SETUVAR --export EDITOR:e
+SETUVAR --export EDITOR:emacs\x2dlauncher\x2dterminal\x2esh
 SETUVAR --export LIBGL_ALWAYS_INDIRECT:1
 SETUVAR --export OLD_APPDATA:C\x3a\x5cUsers\x5cAdmin\x5cAppData\x5cRoaming
 SETUVAR --export --path PATH:/home/ckrieger/\x2easdf/shims\x1e/home/ckrieger/\x2ervm/gems/ruby\x2d2\x2e4\x2e2/bin\x1e/home/ckrieger/\x2ervm/gems/ruby\x2d2\x2e4\x2e2\x40global/bin\x1e/usr/share/rvm/rubies/ruby\x2d2\x2e4\x2e2/bin\x1e/usr/share/rvm/bin\x1e/home/ckrieger/\x2ecargo/bin\x1e/home/ckrieger/\x2elocal/bin\x1e/home/ckrieger/\x2efzf/bin\x1e/bin\x1e/home/ckrieger/\x2easdf/bin\x1e/home/ckrieger/\x2elocal/bin\x1e/usr/local/sbin\x1e/usr/local/bin\x1e/usr/sbin\x1e/usr/bin\x1e/sbin\x1e/bin\x1e/usr/games\x1e/usr/local/games\x1e/mnt/c/Program\x20Files\x20x86/Common\x20Files/Oracle/Java/javapath\x1e/mnt/c/Python27\x1e/mnt/c/Python27/Scripts\x1e/mnt/c/WINDOWS/system32\x1e/mnt/c/WINDOWS\x1e/mnt/c/WINDOWS/System32/Wbem\x1e/mnt/c/WINDOWS/System32/WindowsPowerShell/v1\x2e0\x1e/mnt/c/ProgramData/chocolatey/bin\x1e/mnt/c/Program\x20Files\x20x86/Skype/Phone\x1e/mnt/c/WINDOWS/System32/OpenSSH\x1e/mnt/c/Program\x20Files/Git/cmd\x1e/mnt/c/Users/Admin/AppData/Local/Microsoft/WindowsApps\x1e/mnt/c/Users/Admin/AppData/Local/Programs/Microsoft\x20VS\x20Code/bin\x1e/mnt/c/Program\x20Files/JetBrains/RubyMine\x202018\x2e3\x2e2/bin
+SETUVAR --export VISUAL:emacs\x2dlauncher\x2esh
 SETUVAR __fish_classic_git_prompt_initialized:\x1d
 SETUVAR __fish_init_2_39_8:\x1d
 SETUVAR __fish_init_2_3_0:\x1d

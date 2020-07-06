@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-emacsclient --server-file="$HOME/.emacs.d/server/server" --alternate-editor='emacs-server-editor' $@
-# emacsclient --server-file=~/.emacs.d/server/server --alternate-editor='emacs-server-editor' $@
