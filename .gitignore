@@ -9,6 +9,8 @@
 !/.config/
 !/.config/fish/
 !/.config/fish/**
+!/.config/nixpkgs/
+!/.config/nixpkgs/**
 !/.doom.d/
 !/.doom.d/**
 !/dotmore/
