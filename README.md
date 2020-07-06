@@ -34,8 +34,8 @@ Sometimes I work on Windows, inside Windows Subsystem for Linux, and so I
 sometimes have configuration for Windows apps that I want to manage. WSL2 does
 not allow symlinks from within WSL to Windows (sensibly, given this mechanism is
 based on a 9P server in Windows at time of writing), so as a workaround each
-application whose configuration is managed has a directory in `dotmore/` and
-inside each directory is a script `sync.sh` which applies the configuration.
+application whose configuration is managed has a directory in `dotmore/windows`
+and inside each directory is a script `sync.sh` which applies the configuration.
 
 ## Usage
 
@@ -43,5 +43,5 @@ Quick reference:
 
 * To track a new file, just `git add -f some-file`.
 * To track a whole directory, unignore it from the `.gitignore`.
-* To sync all Windows configuration, run `windows-settings-sync.sh`
+* To sync all Windows configurations, run `windows-settings-sync.sh`
 
