@@ -205,4 +205,4 @@ fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-[ - f ~/qmk_utils/activate_wsl.sh ] && source ~/qmk_utils/activate_wsl.sh
+[ -f ~/qmk_utils/activate_wsl.sh ] && source ~/qmk_utils/activate_wsl.sh
