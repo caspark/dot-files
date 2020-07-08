@@ -26,17 +26,17 @@ Read more:
 Install the packages by passing this directory (i.e. `default.nix`) as the expression containing derivations to build, and select just the ckrieger-devtools attribute:
 
 ``` shell
-nix-env -f '$HOME/dotmore/nix' -iA ckrieger-devtools
+nix-env -f "$HOME/dotmore/nix" -iA ckrieger-devtools
 ```
 
 To search for available packages:
 
 ``` shell
-nix-env -f '$HOME/dotmore/nix' -qasP python
+nix-env -f "$HOME/dotmore/nix" -qasP python
 
 # or
 
-nix search -f '$HOME/dotmore/nix' python
+nix search -f "$HOME/dotmore/nix" python
 # may need to occasionally update the cache too:
 nix search -u
 ```

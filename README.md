@@ -40,6 +40,8 @@ breakages which are only discovered when on a new machine.
 I try to keep most tools I use managed via a `nix` config to make it easy to
 bootstrap a new system. See `dotmore/nix/README.md` for info.
 
+* To install nix packages, run `sync-nix.sh``
+
 ### Emacs
 
 Emacs is currently my editor of choice, using the Doom Emacs distribution.
