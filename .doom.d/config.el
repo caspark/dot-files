@@ -39,7 +39,8 @@
 (setq
  projectile-project-search-path '("~/src/" "/mnt/c/src/")
  evil-goggles-duration 0.25
- server-use-tcp t)
+ server-use-tcp t
+ server-auth-dir "/tmp/emacs-server-auth-dir-ckrieger")
 
 (defun ck-test ()
   (interactive)

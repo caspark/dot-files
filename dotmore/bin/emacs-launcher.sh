@@ -15,7 +15,7 @@ function element_is_in () {
     return 1
 }
 
-readonly SERVER_FILE="$(find "$HOME/.emacs.d/server" -type f)"
+readonly SERVER_FILE="$(find "/tmp/emacs-server-auth-dir-ckrieger" -type f)"
 
 if [[ ! -f "$SERVER_FILE" ]]; then
     element_is_in "-nw" "$@"
