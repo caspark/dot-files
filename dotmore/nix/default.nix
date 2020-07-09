@@ -9,9 +9,9 @@ in pkgs // {
   ckrieger-devtools = pkgs.buildEnv {
     name = "ckrieger-devtools";
     paths = with pkgs; [
-      cvs
       clang
       cmake
+      cvs
       direnv
       emacsUnstable
       entr
@@ -20,24 +20,24 @@ in pkgs // {
       fzf
       git
       htop
+      ispell
       jq
+      libvterm
       lua
+      mercurialFull
       neovim
       niv
       nixfmt
-      mercurialFull
-      python38Full
-      wordnet
-      libvterm
-      shellcheck
       pandoc
-      ispell
+      python38Full
       python38Packages.isort
-      subversion
       ripgrep
       ruby
       rustup
+      shellcheck
+      subversion
       tmux
+      wordnet
       youtube-dl
     ];
   };
