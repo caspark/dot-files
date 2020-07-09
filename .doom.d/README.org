@@ -1,8 +1,7 @@
 Packages that need to be installed for this config to work:
 
 #+BEGIN_SRC shell
-sudo apt install direnv isort ubuntu-wsl wordnet libvterm-bin shellcheck pandoc xdg-utils ispell sqlite3
-cargo install fd-find ripgrep
+sudo apt install ubuntu-wsl xdg-utils ispell
 #+END_SRC
 
 Things to try out:

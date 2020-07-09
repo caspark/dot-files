@@ -12,6 +12,7 @@ in pkgs // {
       cvs
       clang
       cmake
+      direnv
       emacsUnstable
       entr
       fd
@@ -25,7 +26,13 @@ in pkgs // {
       niv
       nixfmt
       mercurialFull
-      pythonFull
+      python38Full
+      wordnet
+      libvterm
+      shellcheck
+      pandoc
+      ispell
+      python38Packages.isort
       subversion
       ripgrep
       ruby
