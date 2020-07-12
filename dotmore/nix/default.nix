@@ -35,6 +35,7 @@ in pkgs // {
       ruby
       rustup
       shellcheck
+      sshpass
       subversion
       tmux
       wordnet
