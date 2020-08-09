@@ -25,6 +25,7 @@ in pkgs // {
       libvterm
       lua
       mercurialFull
+      mosh
       neovim
       niv
       nixfmt
