@@ -1,7 +1,7 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR --export DISABLE_MINI_PROFILER:true
-SETUVAR --export EDITOR:emacs\x2dlauncher\x2dterminal\x2esh
+SETUVAR --export EDITOR:nvim
 SETUVAR FZF_CTRL_T_COMMAND:fd\x20\x2d\x2dtype\x20f\x20\x2e\x20\x24dir
 SETUVAR --export LIBGL_ALWAYS_INDIRECT:1
 SETUVAR --export OLD_APPDATA:C\x3a\x5cUsers\x5cAdmin\x5cAppData\x5cRoaming
