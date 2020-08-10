@@ -1,7 +1,3 @@
-"set runtimepath^=~/.vim runtimepath+=~/.vim/after
-"let &packpath = &runtimepath
-"source ~/.vimrc
-
 " NB: see https://neovim.io/doc/user/vim_diff.html for list of nvim defaults 
 
 " Use <C-L> to clear the highlighting of :set hlsearch.
@@ -32,7 +28,7 @@ endif
 set formatoptions=tcqj
 
 " auto reload vim configuration when it gets changed
-augroup myvimrc
+augroup AutoReloadVimConfigOnInitVimChange
   autocmd!
   autocmd BufWritePost init.vim so $MYVIMRC
 augroup END
@@ -84,27 +80,86 @@ augroup END
 hi CursorColumn ctermbg=235
 hi CursorLine ctermbg=235
 
-echo "init.vim loaded!"
+" swap ' and ` so that ' is position-based mark jumping
+nnoremap ' `
+nnoremap ` '
+
+" set space as my leader key (by actually setting space to the default leader
+" - this roundabout approach means that \ shows up as part of showcmd in
+"   bottom right corner)
+map <SPACE> <leader> 
+" and set backspace as local leader
+let maplocalleader = "\<BS>"
+
+set timeoutlen=500
+
+call plug#begin(stdpath('data') . '/plugged')
+
+Plug 'joshdick/onedark.vim'
+
+Plug 'itchyny/lightline.vim'
+
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+
+Plug 'machakann/vim-highlightedyank'
+
+Plug 'editorconfig/editorconfig-vim'
+
+Plug 'unblevable/quick-scope'
+
+Plug 'tpope/vim-surround'
+
+Plug 'liuchengxu/vim-which-key'
+
+call plug#end()
+
+" configure vim-plug to install plugins on startup and init.vim save
+augroup VimPlugAutoInstallOnStartup
+    autocmd!
+    autocmd VimEnter *
+                \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+                \|   PlugInstall --sync | q
+                \| endif
+augroup END
+augroup VimPlugAutoInstallOnInitVimWrite
+    autocmd!
+    autocmd BufWritePost init.vim PlugInstall --sync | q
+augroup END
+
+" configure joshdick/onedark.vim
+colorscheme onedark
+
+" configure itchyny/lightline.vim
+let g:lightline = { 'colorscheme': 'one' }
+
+" configure machakann/vim-highlightedyank
+let g:highlightedyank_highlight_duration = 150
+
+" configure liuchengxu/vim-which-key
+" since space is a "fake leader", we bind to it directly as well as to our
+" real leader
+nnoremap <silent> <Space> :WhichKey '\'<CR>
+nnoremap <silent> <leader> :WhichKey '\'<CR>
+nnoremap <silent> <localleader> :WhichKey '\<BS>'<CR>
+
+" TODO flesh out these keymappings some more
+nnoremap <leader>fs :w<CR>
+nnoremap <leader>qq :q<CR>
+nnoremap <localleader>nn :echo "hi"<CR>
+
 
 " TODO
-" https://github.com/junegunn/vim-plug
-" fzf and the fzf contrib
 " consider https://github.com/norcalli/nvim-colorizer.lua
-" https://github.com/machakann/vim-highlightedyank
 " https://github.com/mg979/vim-visual-multi
 " make reloading init.vim display message, but not initial load
 " add editorconfig support
-" https://github.com/unblevable/quick-scope
-" set leader key to space and backspace to localleader
 " consider https://github.com/jeffkreeftmeijer/neovim-sensible
 " lsp support: https://old.reddit.com/r/vim/comments/7lnhrt/which_lsp_plugin_should_i_use/
-" https://github.com/itchyny/lightline.vim instead of airline
-" https://github.com/joshdick/onedark.vim/ - see https://old.reddit.com/r/neovim/comments/akg51m/comparison_of_onedark_vs_vimone_colorscheme/
-" consider https://items.sjbach.com/319/configuring-vim-right.html
-" consider https://github.com/liuchengxu/vim-which-key
 " consider https://github.com/mhinz/neovim-remote for opening nvim from within terminal of nvim
 " https://github.com/mbbill/undotree
 " https://github.com/plasticboy/vim-markdown
+" nerd commenter
 
 " see also:
 " https://learnvimscriptthehardway.stevelosh.com/
@@ -113,3 +168,5 @@ echo "init.vim loaded!"
 " https://vimways.org/2018/
 " https://romainl.github.io/the-patient-vimmer/1.html
 " https://github.com/HugoForrat/LaTeX-Vim-User-Manual
+
+echo "init.vim loaded!"
