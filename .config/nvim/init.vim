@@ -11,7 +11,7 @@ endif
 
 " automatically scroll the window if this many lines are not visible
 " vertically and to the side
-set scrolloff=1
+set scrolloff=2
 set sidescrolloff=5
 
 " 1) show as much of current line as possible
@@ -54,6 +54,36 @@ set number
 " make substitute commands display live previews
 set inccommand=nosplit
 
+" make searches case insensitive unless they have uppercase in them
+set ignorecase
+set smartcase
+
+" briefly jump the cursor to a matching bracket as visual show of which
+" bracket matches the one just typed
+set showmatch
+
+" add angle brackets as pairs known by the matchit plugin
+set matchpairs+=<:>
+
+" allow buffer to be moved to background without forgetting anything about it
+set hidden
+
+" make cursor position more prominent for the active window
+set cul
+augroup CursorLine
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
+augroup END
+augroup CursorColumn
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
+  au WinLeave * setlocal nocursorcolumn
+augroup END
+" make cursor column & line highlightting more visible
+hi CursorColumn ctermbg=235
+hi CursorLine ctermbg=235
+
 echo "init.vim loaded!"
 
 " TODO
@@ -74,6 +104,7 @@ echo "init.vim loaded!"
 " consider https://github.com/liuchengxu/vim-which-key
 " consider https://github.com/mhinz/neovim-remote for opening nvim from within terminal of nvim
 " https://github.com/mbbill/undotree
+" https://github.com/plasticboy/vim-markdown
 
 " see also:
 " https://learnvimscriptthehardway.stevelosh.com/
