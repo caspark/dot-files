@@ -1,5 +1,44 @@
 " NB: see https://neovim.io/doc/user/vim_diff.html for list of nvim defaults 
 
+" {{{ BEGIN vim-plugged config
+call plug#begin(stdpath('data') . '/plugged')
+
+" color schemes
+Plug 'joshdick/onedark.vim'
+
+Plug 'itchyny/lightline.vim'
+
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+
+Plug 'machakann/vim-highlightedyank'
+
+Plug 'editorconfig/editorconfig-vim'
+
+Plug 'unblevable/quick-scope'
+
+Plug 'tpope/vim-surround'
+
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb' " github support for fugitive's Gbrowse
+Plug 'tommcdo/vim-fubitive' " bitbucket support for fugitive's Gbrowse
+
+Plug 'liuchengxu/vim-which-key'
+
+call plug#end()
+
+" configure vim-plugged to install plugins and remove old plugins on startup 
+augroup VimPlugAutoInstallOnStartup
+    autocmd!
+    autocmd VimEnter *
+                \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+                \|   PlugInstall --sync | q | PlugClean! | q
+                \| endif
+augroup END
+
+" }}} END vim-plugged config
+
+" {{{ BEGIN Basic vim options
 " Use <C-L> to clear the highlighting of :set hlsearch.
 if maparg('<C-L>', 'n') ==# ''
   nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
@@ -64,6 +103,18 @@ set matchpairs+=<:>
 " allow buffer to be moved to background without forgetting anything about it
 set hidden
 
+" expect keystrokes for a mapped sequence to complete a bit faster
+set timeoutlen=500
+
+" turn on fancy color scheme support
+set termguicolors
+
+" turn off showing insert/visual/normal mode (expect statusline to show that)
+set noshowmode
+
+" }}} END basic vim options
+
+" {{{ BEGIN Look and feel (theme, cursor, modeline)
 " make cursor position more prominent for the active window
 set cul
 augroup CursorLine
@@ -80,75 +131,98 @@ augroup END
 hi CursorColumn ctermbg=235
 hi CursorLine ctermbg=235
 
+" color scheme and statusbar
+colorscheme onedark
+let g:lightline = { 'colorscheme': 'wombat' }
+
+" }}} END look and feel
+
+" {{{ Plugin configuration
+
+" machakann/vim-highlightedyank
+let g:highlightedyank_highlight_duration = 150
+
+" }}} END plugin configuration
+
+" {{{ BEGIN Key bindings
+
 " swap ' and ` so that ' is position-based mark jumping
 nnoremap ' `
 nnoremap ` '
 
-" set space as my leader key (by actually setting space to the default leader
-" - this roundabout approach means that \ shows up as part of showcmd in
-"   bottom right corner)
-map <SPACE> <leader> 
-" and set backspace as local leader
-let maplocalleader = "\<BS>"
+" set space as my leader key
+let mapleader = "\<Space>"
+" and set comma as local leader
+let maplocalleader = ","
 
-set timeoutlen=500
+" move lines up/down with alt+up/down
+nnoremap <A-Up> :m .-2<CR>==
+nnoremap <A-Down> :m .+1<CR>==
 
-call plug#begin(stdpath('data') . '/plugged')
-
-Plug 'joshdick/onedark.vim'
-
-Plug 'itchyny/lightline.vim'
-
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-
-Plug 'machakann/vim-highlightedyank'
-
-Plug 'editorconfig/editorconfig-vim'
-
-Plug 'unblevable/quick-scope'
-
-Plug 'tpope/vim-surround'
-
-Plug 'liuchengxu/vim-which-key'
-
-call plug#end()
-
-" configure vim-plug to install plugins on startup and init.vim save
-augroup VimPlugAutoInstallOnStartup
-    autocmd!
-    autocmd VimEnter *
-                \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-                \|   PlugInstall --sync | q
-                \| endif
-augroup END
-augroup VimPlugAutoInstallOnInitVimWrite
-    autocmd!
-    autocmd BufWritePost init.vim PlugInstall --sync | q
-augroup END
-
-" configure joshdick/onedark.vim
-colorscheme onedark
-
-" configure itchyny/lightline.vim
-let g:lightline = { 'colorscheme': 'one' }
-
-" configure machakann/vim-highlightedyank
-let g:highlightedyank_highlight_duration = 150
-
-" configure liuchengxu/vim-which-key
+" liuchengxu/vim-which-key
 " since space is a "fake leader", we bind to it directly as well as to our
 " real leader
-nnoremap <silent> <Space> :WhichKey '\'<CR>
-nnoremap <silent> <leader> :WhichKey '\'<CR>
-nnoremap <silent> <localleader> :WhichKey '\<BS>'<CR>
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+nnoremap <silent> <localleader> :WhichKey ','<CR>
 
-" TODO flesh out these keymappings some more
-nnoremap <leader>fs :w<CR>
+" {{{ actual leader key mappings
+nnoremap <leader><Space> :GFiles<CR>
+nnoremap <leader>: :History:<CR>
+nnoremap <leader>; :Commands<CR>
+nnoremap <leader>/ :History/<CR>
+
 nnoremap <leader>qq :q<CR>
+nnoremap <leader>qQ :q!<CR>
+nnoremap <leader>qs :x<CR>
+
+nnoremap <leader>ww :Windows<CR>
+
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fr :History<CR>
+nnoremap <leader>fl :Locate ''<Left>
+nnoremap <leader>fs :w<CR>
+
+nnoremap <leader>vv :e $MYVIMRC<CR>
+nnoremap <leader>vm :Maps<CR>
+nnoremap <leader>vf :Filetypes<CR>
+nnoremap <leader>vh :Helptags<CR>
+nnoremap <leader>vpi :PlugInstall<CR>
+nnoremap <leader>vpu :PlugUpdate<CR>
+nnoremap <leader>vpg :PlugUpgrade<CR>
+nnoremap <leader>vps :PlugStatus<CR>
+nnoremap <leader>vpd :PlugDiff<CR>
+nnoremap <leader>vpc :PlugClean!<CR>
+
+nnoremap <leader>tt :Buffers<CR>
+nnoremap <leader>tm :Marks<CR>
+nnoremap <leader>tc :bwipeout<CR>
+
+nnoremap <leader>gw :Gwrite<CR>
+nnoremap <leader>gS :Gwrite<CR>
+nnoremap <leader>gp :Git push<CR>
+nnoremap <leader>gg :Gstatus<CR>
+nnoremap <leader>gr :Gread<CR>
+nnoremap <leader>gx :GDelete<CR>
+nnoremap <leader>gcc :Commits<CR>
+nnoremap <leader>gcb :BCommits<CR>
+nnoremap <leader>gd :Gdiffsplit<CR>
+nnoremap <leader>gb :Git blame<CR>
+nnoremap <leader>gl :Glog<CR>
+nnoremap <leader>gu :Git pull<CR>
+nnoremap <leader>ge :Ggrep<CR>
+nnoremap <leader>gm :GMove<CR>
+nnoremap <leader>gh :GBrowse<CR>
+
+
+" }}} END leader key mappings
+
+" {{{ localleader mappings
 nnoremap <localleader>nn :echo "hi"<CR>
+" }}} localleader mappings
 
+" }}} END Key bindings
 
+" {{{ BEGIN Todos
 " TODO
 " consider https://github.com/norcalli/nvim-colorizer.lua
 " https://github.com/mg979/vim-visual-multi
@@ -160,6 +234,7 @@ nnoremap <localleader>nn :echo "hi"<CR>
 " https://github.com/mbbill/undotree
 " https://github.com/plasticboy/vim-markdown
 " nerd commenter
+" https://github.com/dyng/ctrlsf.vim for search and replace across files?
 
 " see also:
 " https://learnvimscriptthehardway.stevelosh.com/
@@ -168,5 +243,7 @@ nnoremap <localleader>nn :echo "hi"<CR>
 " https://vimways.org/2018/
 " https://romainl.github.io/the-patient-vimmer/1.html
 " https://github.com/HugoForrat/LaTeX-Vim-User-Manual
+" }}} END Todos
 
 echo "init.vim loaded!"
+" vim: filetype=vim foldmethod=marker foldlevel=0 foldcolumn=3
