@@ -112,6 +112,9 @@ set termguicolors
 " turn off showing insert/visual/normal mode (expect statusline to show that)
 set noshowmode
 
+" enable undo history that persists after exiting
+set undofile
+
 " }}} END basic vim options
 
 " {{{ BEGIN Look and feel (theme, cursor, modeline)
