@@ -40,6 +40,7 @@ in pkgs // {
       subversion
       tmux
       wordnet
+      xsv
       youtube-dl
     ];
   };
