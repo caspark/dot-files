@@ -185,6 +185,11 @@ nnoremap <leader>fr :History<CR>
 nnoremap <leader>fl :Locate ''<Left>
 nnoremap <leader>fs :w<CR>
 
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
+
 nnoremap <leader>vv :e $MYVIMRC<CR>
 nnoremap <leader>vm :Maps<CR>
 nnoremap <leader>vf :Filetypes<CR>
@@ -216,6 +221,10 @@ nnoremap <leader>ge :Ggrep<CR>
 nnoremap <leader>gm :GMove<CR>
 nnoremap <leader>gh :GBrowse<CR>
 
+vnoremap <leader>y "+y
+nnoremap <leader>Y "+yg_
+nnoremap <leader>y "+y
+nnoremap <leader>yy "+yy
 
 " }}} END leader key mappings
 
