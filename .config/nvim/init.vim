@@ -258,4 +258,4 @@ nnoremap <localleader>nn :echo "hi"<CR>
 " }}} END Todos
 
 echo "init.vim loaded!"
-" vim: filetype=vim foldmethod=marker foldlevel=0 foldcolumn=3
+" vim: filetype=vim foldmethod=marker foldlevel=10 foldcolumn=3
