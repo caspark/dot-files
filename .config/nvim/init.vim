@@ -32,9 +32,13 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'thirtythreeforty/lessspace.vim' " trim tailing whitespace at end of files
 
+Plug 'arthurxavierx/vim-caser' " case changes with gs then p (pascal), c
+" (camel), _ (snake), u (upper), t (title), s (sentence), space, k (kebab), K
+" (title kebab), . (dot case)
+
 call plug#end()
 
-" configure vim-plugged to install plugins and remove old plugins on startup 
+" configure vim-plugged to install plugins and remove old plugins on startup
 augroup VimPlugAutoInstallOnStartup
     autocmd!
     autocmd VimEnter *
