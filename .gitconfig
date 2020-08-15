@@ -15,3 +15,5 @@
 
 [core]
 	excludesfile = /home/caspar/.gitignore_global
+[pull]
+	rebase = true
