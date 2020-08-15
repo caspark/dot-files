@@ -182,6 +182,9 @@ nnoremap <A-Down> :m .+1<CR>==
 " real leader
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 nnoremap <silent> <localleader> :WhichKey ','<CR>
+" also explain some other common "leader-like" keys
+nnoremap <silent> [ :WhichKey '['<CR>
+nnoremap <silent> ] :WhichKey ']'<CR>
 
 " {{{ actual leader key mappings
 nnoremap <leader><Space> :GFiles<CR>
