@@ -1,4 +1,4 @@
-" NB: see https://neovim.io/doc/user/vim_diff.html for list of nvim defaults 
+" NB: see https://neovim.io/doc/user/vim_diff.html for list of nvim defaults
 
 " {{{ BEGIN vim-plugged config
 call plug#begin(stdpath('data') . '/plugged')
