@@ -27,6 +27,8 @@ Plug 'liuchengxu/vim-which-key'
 
 Plug 'airblade/vim-gitgutter'
 
+Plug 'thirtythreeforty/lessspace.vim' " trim tailing whitespace at end of files
+
 call plug#end()
 
 " configure vim-plugged to install plugins and remove old plugins on startup 
@@ -251,7 +253,6 @@ nnoremap <localleader>nn :echo "hi"<CR>
 " https://github.com/dyng/ctrlsf.vim for search and replace across files?
 " set up maps for gitgutter - https://github.com/airblade/vim-gitgutter
 " set up statusline - gitgutter and fugitive should contribute
-" strip trailing whitespace on changed lines on save
 
 " see also:
 " https://learnvimscriptthehardway.stevelosh.com/
