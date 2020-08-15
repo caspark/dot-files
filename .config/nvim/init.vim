@@ -18,6 +18,9 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'unblevable/quick-scope'
 
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-unimpaired'
 
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb' " github support for fugitive's Gbrowse
