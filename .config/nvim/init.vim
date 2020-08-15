@@ -36,6 +36,7 @@ Plug 'arthurxavierx/vim-caser' " case changes with gs then p (pascal), c
 " (camel), _ (snake), u (upper), t (title), s (sentence), space, k (kebab), K
 " (title kebab), . (dot case)
 
+Plug 'tmux-plugins/vim-tmux-focus-events' " make focus events work in terminal
 
 call plug#end()
 
