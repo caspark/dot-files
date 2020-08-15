@@ -234,6 +234,7 @@ nnoremap <leader>gp :Git push<CR>
 nnoremap <leader>gg :Gstatus<CR>
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gx :GDelete<CR>
+nnoremap <leader>gC :Git commit -v<CR>
 nnoremap <leader>gcc :Commits<CR>
 nnoremap <leader>gcb :BCommits<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
