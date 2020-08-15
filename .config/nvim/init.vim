@@ -178,6 +178,9 @@ let mapleader = "\<Space>"
 " and set comma as local leader
 let maplocalleader = ","
 
+" save and quit with double ctrl-c
+nnoremap <C-C><C-C> :x<CR>
+
 " move lines up/down with alt+up/down
 nnoremap <A-Up> :m .-2<CR>==
 nnoremap <A-Down> :m .+1<CR>==
