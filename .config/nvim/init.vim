@@ -22,19 +22,20 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-unimpaired'
 
+Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb' " github support for fugitive's Gbrowse
 Plug 'tommcdo/vim-fubitive' " bitbucket support for fugitive's Gbrowse
 
 Plug 'liuchengxu/vim-which-key'
 
-Plug 'airblade/vim-gitgutter'
-
 Plug 'thirtythreeforty/lessspace.vim' " trim tailing whitespace at end of files
+Plug 'ntpeters/vim-better-whitespace' " show trailing whitespace in red
 
 Plug 'arthurxavierx/vim-caser' " case changes with gs then p (pascal), c
 " (camel), _ (snake), u (upper), t (title), s (sentence), space, k (kebab), K
 " (title kebab), . (dot case)
+
 
 call plug#end()
 
@@ -155,6 +156,9 @@ let g:lightline = { 'colorscheme': 'wombat' }
 
 " machakann/vim-highlightedyank
 let g:highlightedyank_highlight_duration = 150
+
+" ntpeters/vim-better-whitespace
+let g:show_spaces_that_precede_tabs=1
 
 " }}} END plugin configuration
 
