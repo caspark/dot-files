@@ -128,6 +128,10 @@ set noshowmode
 " enable undo history that persists after exiting
 set undofile
 
+" ms before saving swap and firing cursor hold autocmd (also used by various
+" plugins to do things while user is idle)
+set updatetime=100
+
 " }}} END basic vim options
 
 " {{{ BEGIN Look and feel (theme, cursor, modeline)
