@@ -17,6 +17,13 @@ Plug 'editorconfig/editorconfig-vim'
 
 Plug 'unblevable/quick-scope'
 
+" text objects
+Plug 'kana/vim-textobj-user' " text object helper, used by..
+Plug 'kana/vim-textobj-entire' " ae/ie for entire file
+Plug 'kana/vim-textobj-indent' " a/i,i/I for indent blocks (:h textobj-indent)
+Plug 'kana/vim-textobj-line' " al/il for line with/without lead/trailing spaces
+Plug 'Julian/vim-textobj-variable-segment' " iv/av text objs for variable segments
+
 Plug 'tpope/vim-rsi' " readline bindings in insert mode
 Plug 'tpope/vim-sleuth' " auto pick tab and shift widths
 Plug 'tpope/vim-repeat' " make plugin commands repeatable with .
@@ -61,9 +68,6 @@ Plug 'lfilho/cosco.vim' " shortcut to add semicolons intelligently
 Plug 'AndrewRadev/splitjoin.vim' " split and join lines with gS/gJ
 let g:splitjoin_split_mapping = ''
 let g:splitjoin_join_mapping  = ''
-
-Plug 'kana/vim-textobj-user' " text object helper, used by..
-Plug 'Julian/vim-textobj-variable-segment' " iv/av text objs for variable segments
 
 Plug 'markonm/traces.vim' " live previews of ranges, substitutes, etc
 
