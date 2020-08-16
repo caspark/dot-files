@@ -18,12 +18,13 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'unblevable/quick-scope'
 
 Plug 'tpope/vim-sleuth' " auto pick tab and shift widths
-Plug 'tpope/vim-surround' " add/remove/change delimiters
 Plug 'tpope/vim-repeat' " make plugin commands repeatable with .
 Plug 'tpope/vim-speeddating' " date and time incrementing
 Plug 'tpope/vim-unimpaired' " misc 'backwards and forwards' commands
 Plug 'tpope/vim-eunuch' " unix commands
 Plug 'tpope/vim-endwise' " auto insert closing keywords (e.g. 'fi')
+
+Plug 'machakann/vim-sandwich' " surround commands but better
 
 Plug 'rstacruz/vim-closer' " insert closing brackets but only on enter
 
