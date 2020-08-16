@@ -55,6 +55,8 @@ Plug 'machakann/vim-sandwich' " surround commands but better
 Plug 'rstacruz/vim-closer' " insert closing brackets but only on enter
 
 Plug 'airblade/vim-gitgutter'
+let g:gitgutter_map_keys = 0
+
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb' " github support for fugitive's Gbrowse
 Plug 'tommcdo/vim-fubitive' " bitbucket support for fugitive's Gbrowse
@@ -244,9 +246,19 @@ let maplocalleader = ","
 " save and quit with double ctrl-c
 nnoremap <C-C><C-C> :x<CR>
 
-" move lines up/down with alt+up/down
-nnoremap <A-Up> :m .-2<CR>==
+" move lines down/up with alt+up/down
 nnoremap <A-Down> :m .+1<CR>==
+nnoremap <A-Up> :m .-2<CR>==
+
+" move through hunks with ctrl+down/up
+nmap <C-Down> <Plug>(GitGutterNextHunk)
+nmap <C-Up> <Plug>(GitGutterPrevHunk)
+
+" text objects
+omap ih <Plug>(GitGutterTextObjectInnerPending)
+omap ah <Plug>(GitGutterTextObjectOuterPending)
+xmap ih <Plug>(GitGutterTextObjectInnerVisual)
+xmap ah <Plug>(GitGutterTextObjectOuterVisual)
 
 " liuchengxu/vim-which-key
 " since space is a "fake leader", we bind to it directly as well as to our
@@ -295,18 +307,20 @@ nnoremap <leader>tm :Marks<CR>
 nnoremap <leader>tc :bwipeout<CR>
 
 nnoremap <leader>gw :Gwrite<CR>
+nmap <leader>gs <Plug>(GitGutterStageHunk)
 nnoremap <leader>gS :Gwrite<CR>
-nnoremap <leader>gp :Git push<CR>
+nnoremap <leader>gp :Git pull<CR>
+nnoremap <leader>gP :Git push<CR>
 nnoremap <leader>gg :Gstatus<CR>
 nnoremap <leader>gr :Gread<CR>
-nnoremap <leader>gx :GDelete<CR>
-nnoremap <leader>gC :Git commit -v<CR>
-nnoremap <leader>gcc :Commits<CR>
-nnoremap <leader>gcb :BCommits<CR>
+nnoremap <leader>gX :GDelete<CR>
+nnoremap <leader>gc :Git commit -v<CR>
+nnoremap <leader>gCc :Commits<CR>
+nnoremap <leader>gCb :BCommits<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
 nnoremap <leader>gb :Git blame<CR>
 nnoremap <leader>gl :Glog<CR>
-nnoremap <leader>gu :Git pull<CR>
+nmap <leader>gu <Plug>(GitGutterUndoHunk)
 nnoremap <leader>ge :Ggrep<CR>
 nnoremap <leader>gm :GMove<CR>
 nnoremap <leader>gh :GBrowse<CR>
