@@ -139,6 +139,10 @@ set updatetime=100
 " https://github.com/neovim/neovim/pull/12621
 set signcolumn=yes
 
+" show 2 lines of command output (helps prevent "press enter to continue")
+" (recommended by coc vim plugin)
+set cmdheight=2
+
 " }}} END basic vim options
 
 " {{{ BEGIN Look and feel (theme, cursor, modeline)
