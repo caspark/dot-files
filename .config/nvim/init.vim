@@ -267,9 +267,6 @@ silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", v:count)
 xmap <A-Down> <Plug>unimpairedMoveSelectionDown
 silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", v:count)
 
-nnoremap <A-Down> :m .+1<CR>==
-nnoremap <A-Up> :m .-2<CR>==
-
 " move through hunks with ctrl+down/up
 nmap <C-Down> <Plug>(GitGutterNextHunk)
 nmap <C-Up> <Plug>(GitGutterPrevHunk)
