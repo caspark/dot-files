@@ -23,6 +23,7 @@ Plug 'tpope/vim-repeat' " make plugin commands repeatable with .
 Plug 'tpope/vim-speeddating' " date and time incrementing
 Plug 'tpope/vim-unimpaired' " misc 'backwards and forwards' commands
 Plug 'tpope/vim-eunuch' " unix commands
+Plug 'tpope/vim-endwise' " auto insert closing keywords (e.g. 'fi')
 
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -43,8 +44,9 @@ Plug 'tmux-plugins/vim-tmux-focus-events' " make focus events work in terminal
 
 Plug 'tomtom/tcomment_vim' " commenting shortcuts
 
-Plug 'roxma/vim-paste-easy' " automatically turn on paste when chars appear
-" too fast to have been typed by hand
+Plug 'ConradIrwin/vim-bracketed-paste' " detect pastes in terminal via magic keycode
+" bracketed paste is unfortunately not supported in microsoft terminal yet:
+" https://github.com/microsoft/terminal/issues/395
 
 Plug 'psliwka/vim-smoothie' " inertia-based inertia-based scrolling for ctrl-d/u
 let g:smoothie_break_on_reverse = 1
