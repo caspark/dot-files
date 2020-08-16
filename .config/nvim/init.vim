@@ -45,6 +45,10 @@ Plug 'tomtom/tcomment_vim' " commenting shortcuts
 Plug 'roxma/vim-paste-easy' " automatically turn on paste when chars appear
 " too fast to have been typed by hand
 
+Plug 'psliwka/vim-smoothie' " inertia-based inertia-based scrolling for ctrl-d/u
+let g:smoothie_break_on_reverse = 1
+let g:smoothie_base_speed = 25
+
 call plug#end()
 
 " configure vim-plugged to install plugins and remove old plugins on startup
