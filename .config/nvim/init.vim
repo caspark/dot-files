@@ -25,6 +25,8 @@ Plug 'tpope/vim-unimpaired' " misc 'backwards and forwards' commands
 Plug 'tpope/vim-eunuch' " unix commands
 Plug 'tpope/vim-endwise' " auto insert closing keywords (e.g. 'fi')
 
+Plug 'rstacruz/vim-closer' " insert closing brackets but only on enter
+
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb' " github support for fugitive's Gbrowse
