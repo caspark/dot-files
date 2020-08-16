@@ -51,6 +51,10 @@ let g:smoothie_base_speed = 25
 
 Plug 'lfilho/cosco.vim' " shortcut to add semicolons intelligently
 
+Plug 'AndrewRadev/splitjoin.vim' " split and join lines with gS/gJ
+let g:splitjoin_split_mapping = ''
+let g:splitjoin_join_mapping  = ''
+
 call plug#end()
 
 " configure vim-plugged to install plugins and remove old plugins on startup
@@ -291,6 +295,8 @@ nnoremap <leader>yy "+yy
 " {{{ localleader mappings
 nmap <silent> <localleader>o <Plug>(cosco-commaOrSemiColon)
 imap <silent> <localleader>o <c-o><Plug>(cosco-commaOrSemiColon)
+nmap <localleader>j :SplitjoinJoin<cr>
+nmap <localleader>s :SplitjoinSplit<cr>
 " }}} localleader mappings
 
 " }}} END Key bindings
