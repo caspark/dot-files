@@ -42,6 +42,9 @@ Plug 'tmux-plugins/vim-tmux-focus-events' " make focus events work in terminal
 
 Plug 'tomtom/tcomment_vim' " commenting shortcuts
 
+Plug 'roxma/vim-paste-easy' " automatically turn on paste when chars appear
+" too fast to have been typed by hand
+
 call plug#end()
 
 " configure vim-plugged to install plugins and remove old plugins on startup
