@@ -58,6 +58,8 @@ let g:splitjoin_join_mapping  = ''
 Plug 'kana/vim-textobj-user' " text object helper, used by..
 Plug 'Julian/vim-textobj-variable-segment' " iv/av text objs for variable segments
 
+Plug 'markonm/traces.vim' " live previews of ranges, substitutes, etc
+
 call plug#end()
 
 " configure vim-plugged to install plugins and remove old plugins on startup
@@ -118,9 +120,6 @@ set expandtab
 " line numbering (:set nu/nonu and rnu/nornu)
 set number
 " set relativenumber
-
-" make substitute commands display live previews
-set inccommand=nosplit
 
 " make searches case insensitive unless they have uppercase in them
 set ignorecase
