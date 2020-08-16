@@ -19,6 +19,8 @@ Plug 'sheerun/vim-polyglot' " language packs for all the languages
 
 Plug 'unblevable/quick-scope'
 
+Plug 'tyru/capture.vim' " show command output in buffer with :Capture
+
 " text objects
 Plug 'kana/vim-textobj-user' " text object helper, used by..
 Plug 'kana/vim-textobj-entire' " ae/ie for entire file
