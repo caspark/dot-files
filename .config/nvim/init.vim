@@ -241,6 +241,8 @@ runtime macros/sandwich/keymap/surround.vim
 " swap ' and ` so that ' is position-based mark jumping
 nnoremap ' `
 nnoremap ` '
+xnoremap ' `
+xnoremap ` '
 
 " set space as my leader key
 let mapleader = "\<Space>"
