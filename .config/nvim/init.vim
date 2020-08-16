@@ -24,6 +24,20 @@ Plug 'kana/vim-textobj-indent' " a/i,i/I for indent blocks (:h textobj-indent)
 Plug 'kana/vim-textobj-line' " al/il for line with/without lead/trailing spaces
 Plug 'Julian/vim-textobj-variable-segment' " iv/av text objs for variable segments
 
+Plug 'terryma/vim-expand-region' " +/- to extend/shrink selection
+let g:expand_region_text_objects = {
+      \ 'iw'  :0,
+      \ 'iW'  :0,
+      \ 'i"'  :1,
+      \ 'i'''  :1,
+      \ 'i{'  :1,
+      \ 'i('  :1,
+      \ 'i['  :1,
+      \ 'a%'  :1,
+      \ 'ii'  :1,
+      \ 'aI'  :0,
+      \ }
+
 Plug 'tpope/vim-rsi' " readline bindings in insert mode
 Plug 'tpope/vim-sleuth' " auto pick tab and shift widths
 Plug 'tpope/vim-repeat' " make plugin commands repeatable with .
