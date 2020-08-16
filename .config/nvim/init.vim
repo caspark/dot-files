@@ -132,6 +132,11 @@ set undofile
 " plugins to do things while user is idle)
 set updatetime=100
 
+" always show the sign column (so that it doesn't jump in and out of view)
+" TODO signcolumn=number would be nice to have:
+" https://github.com/neovim/neovim/pull/12621
+set signcolumn=yes
+
 " }}} END basic vim options
 
 " {{{ BEGIN Look and feel (theme, cursor, modeline)
