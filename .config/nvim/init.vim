@@ -12,6 +12,7 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
 Plug 'machakann/vim-highlightedyank'
+let g:highlightedyank_highlight_duration = 150
 
 Plug 'editorconfig/editorconfig-vim'
 
@@ -68,7 +69,9 @@ Plug 'tpope/vim-dispatch' " let plugins (namely fugitive) run commands async
 Plug 'liuchengxu/vim-which-key'
 
 Plug 'thirtythreeforty/lessspace.vim' " trim tailing whitespace at end of files
+
 Plug 'ntpeters/vim-better-whitespace' " show trailing whitespace in red
+let g:show_spaces_that_precede_tabs=1
 
 Plug 'arthurxavierx/vim-caser' " case changes with gs then p (pascal), c
 " (camel), _ (snake), u (upper), t (title), s (sentence), space, k (kebab), K
@@ -227,11 +230,9 @@ hi CursorLine ctermbg=238 guibg=#181C24
 
 " {{{ Plugin configuration
 
-" machakann/vim-highlightedyank
-let g:highlightedyank_highlight_duration = 150
-
-" ntpeters/vim-better-whitespace
-let g:show_spaces_that_precede_tabs=1
+" enable vim-surround maps for sandwich (to avoid clobbering s in normal mode)
+" https://github.com/machakann/vim-sandwich/wiki/Introduce-vim-surround-keymappings
+runtime macros/sandwich/keymap/surround.vim
 
 " }}} END plugin configuration
 
