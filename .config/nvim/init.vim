@@ -254,7 +254,17 @@ nnoremap <C-C><C-C> :x<CR>
 nmap <A-Left> <Plug>(swap-prev)
 nmap <A-Right> <Plug>(swap-next)
 
-" move lines down/up with alt+up/down
+" move lines down/up with alt+down/up
+nmap <A-Down> <Plug>unimpairedMoveDown
+silent! call repeat#set("\<Plug>unimpairedMoveDown", v:count)
+nmap <A-Up> <Plug>unimpairedMoveUp
+silent! call repeat#set("\<Plug>unimpairedMoveUp", v:count)
+" and move lines down/up with alt+down/up in visual mode
+xmap <A-Up> <Plug>unimpairedMoveSelectionUp
+silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", v:count)
+xmap <A-Down> <Plug>unimpairedMoveSelectionDown
+silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", v:count)
+
 nnoremap <A-Down> :m .+1<CR>==
 nnoremap <A-Up> :m .-2<CR>==
 
