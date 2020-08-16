@@ -49,6 +49,8 @@ Plug 'psliwka/vim-smoothie' " inertia-based inertia-based scrolling for ctrl-d/u
 let g:smoothie_break_on_reverse = 1
 let g:smoothie_base_speed = 25
 
+Plug 'lfilho/cosco.vim' " shortcut to add semicolons intelligently
+
 call plug#end()
 
 " configure vim-plugged to install plugins and remove old plugins on startup
@@ -287,7 +289,8 @@ nnoremap <leader>yy "+yy
 " }}} END leader key mappings
 
 " {{{ localleader mappings
-nnoremap <localleader>nn :echo "hi"<CR>
+nmap <silent> <localleader>o <Plug>(cosco-commaOrSemiColon)
+imap <silent> <localleader>o <c-o><Plug>(cosco-commaOrSemiColon)
 " }}} localleader mappings
 
 " }}} END Key bindings
