@@ -52,6 +52,9 @@ Plug 'tpope/vim-endwise' " auto insert closing keywords (e.g. 'fi')
 
 Plug 'machakann/vim-sandwich' " surround commands but better
 
+Plug 'machakann/vim-swap' " commands to swap left/right
+let g:swap_no_default_key_mappings = 1
+
 Plug 'rstacruz/vim-closer' " insert closing brackets but only on enter
 
 Plug 'airblade/vim-gitgutter'
@@ -245,6 +248,10 @@ let maplocalleader = ","
 
 " save and quit with double ctrl-c
 nnoremap <C-C><C-C> :x<CR>
+
+" swap arguments with alt+left/right
+nmap <A-Left> <Plug>(swap-prev)
+nmap <A-Right> <Plug>(swap-next)
 
 " move lines down/up with alt+up/down
 nnoremap <A-Down> :m .+1<CR>==
