@@ -16,6 +16,7 @@ in pkgs // {
       emacsUnstable
       entr
       fd
+      firefox
       fish
       fzf
       git
