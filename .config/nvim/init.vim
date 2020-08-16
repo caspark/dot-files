@@ -17,10 +17,11 @@ Plug 'editorconfig/editorconfig-vim'
 
 Plug 'unblevable/quick-scope'
 
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-speeddating'
-Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-surround' " add/remove/change delimiters
+Plug 'tpope/vim-repeat' " make plugin commands repeatable with .
+Plug 'tpope/vim-speeddating' " date and time incrementing
+Plug 'tpope/vim-unimpaired' " misc 'backwards and forwards' commands
+Plug 'tpope/vim-eunuch' " unix commands
 
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -258,6 +259,17 @@ nnoremap <leader>gu :Git pull<CR>
 nnoremap <leader>ge :Ggrep<CR>
 nnoremap <leader>gm :GMove<CR>
 nnoremap <leader>gh :GBrowse<CR>
+
+nnoremap <leader>ud :Delete %
+nnoremap <leader>uD :Unlink %
+nnoremap <leader>um :Move %
+nnoremap <leader>ur :Rename %
+nnoremap <leader>uc :Chmod u+x %
+nnoremap <leader>um :Mkdir
+nnoremap <leader>uf :Cfind
+nnoremap <leader>ua :Wall
+nnoremap <leader>usw :SudoWrite
+nnoremap <leader>use :SudoEdit
 
 vnoremap <leader>y "+y
 nnoremap <leader>Y "+yg_
