@@ -63,6 +63,8 @@ Plug 'Julian/vim-textobj-variable-segment' " iv/av text objs for variable segmen
 
 Plug 'markonm/traces.vim' " live previews of ranges, substitutes, etc
 
+Plug 'andymass/vim-matchup' " replaces matchit, adds support for lang keywords
+
 call plug#end()
 
 " configure vim-plugged to install plugins and remove old plugins on startup
