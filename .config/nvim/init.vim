@@ -15,6 +15,8 @@ Plug 'machakann/vim-highlightedyank'
 
 Plug 'editorconfig/editorconfig-vim'
 
+Plug 'sheerun/vim-polyglot' " language packs for all the languages
+
 Plug 'unblevable/quick-scope'
 
 " text objects
