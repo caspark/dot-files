@@ -187,6 +187,9 @@ set signcolumn=yes
 " (recommended by coc vim plugin)
 set cmdheight=2
 
+" 20% fake transparency on floating window
+
+set pumblend=20
 " }}} END basic vim options
 
 " {{{ BEGIN Look and feel (theme, cursor, modeline)
