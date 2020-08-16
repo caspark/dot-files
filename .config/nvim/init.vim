@@ -17,6 +17,7 @@ Plug 'editorconfig/editorconfig-vim'
 
 Plug 'unblevable/quick-scope'
 
+Plug 'tpope/vim-sleuth' " auto pick tab and shift widths
 Plug 'tpope/vim-surround' " add/remove/change delimiters
 Plug 'tpope/vim-repeat' " make plugin commands repeatable with .
 Plug 'tpope/vim-speeddating' " date and time incrementing
