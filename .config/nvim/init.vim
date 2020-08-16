@@ -55,6 +55,9 @@ Plug 'AndrewRadev/splitjoin.vim' " split and join lines with gS/gJ
 let g:splitjoin_split_mapping = ''
 let g:splitjoin_join_mapping  = ''
 
+Plug 'kana/vim-textobj-user' " text object helper, used by..
+Plug 'Julian/vim-textobj-variable-segment' " iv/av text objs for variable segments
+
 call plug#end()
 
 " configure vim-plugged to install plugins and remove old plugins on startup
