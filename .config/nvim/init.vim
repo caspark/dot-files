@@ -194,28 +194,29 @@ set cmdheight=2
 " 20% fake transparency on floating window
 
 set pumblend=20
+
+" enable cursor column and line
+set cursorline
+set cursorcolumn
+
+" make cursor position more prominent for the active window
+augroup VisibleCursorLineAndColumn
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline | setlocal cursorcolumn
+  au WinLeave * setlocal nocursorline | setlocal nocursorcolumn
+augroup END
+
 " }}} END basic vim options
 
 " {{{ BEGIN Look and feel (theme, cursor, modeline)
-" make cursor position more prominent for the active window
-set cul
-augroup CursorLine
-  au!
-  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-  au WinLeave * setlocal nocursorline
-augroup END
-augroup CursorColumn
-  au!
-  au VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
-  au WinLeave * setlocal nocursorcolumn
-augroup END
-" make cursor column & line highlightting more visible
-hi CursorColumn ctermbg=235
-hi CursorLine ctermbg=235
 
 " color scheme and statusbar
 colorscheme onedark
 let g:lightline = { 'colorscheme': 'wombat' }
+
+" make cursor column & line highlighting more visible
+hi CursorColumn ctermbg=238 guibg=#181C24
+hi CursorLine ctermbg=238 guibg=#181C24
 
 " }}} END look and feel
 
