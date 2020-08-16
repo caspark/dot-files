@@ -27,6 +27,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb' " github support for fugitive's Gbrowse
 Plug 'tommcdo/vim-fubitive' " bitbucket support for fugitive's Gbrowse
+Plug 'tpope/vim-dispatch' " let plugins (namely fugitive) run commands async
 
 Plug 'liuchengxu/vim-which-key'
 
