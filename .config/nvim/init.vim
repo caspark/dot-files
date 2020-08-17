@@ -103,6 +103,8 @@ Plug 'andymass/vim-matchup' " replaces matchit, adds support for lang keywords
 Plug 'matze/vim-move' " move lines and visual selections around interactively
 let g:move_map_keys = 0
 
+Plug 'svermeulen/vim-subversive' " substitute motions (bindings added later)
+
 call plug#end()
 
 " configure vim-plugged to install plugins and remove old plugins on startup
