@@ -275,6 +275,11 @@ xmap <A-Right> <Plug>MoveBlockRight
 nmap <C-Down> <Plug>(GitGutterNextHunk)
 nmap <C-Up> <Plug>(GitGutterPrevHunk)
 
+" bind s to subversive's substitute motion
+nmap s <plug>(SubversiveSubstitute)
+nmap ss <plug>(SubversiveSubstituteLine)
+nmap S <plug>(SubversiveSubstituteToEndOfLine)
+
 " text objects
 omap ih <Plug>(GitGutterTextObjectInnerPending)
 omap ah <Plug>(GitGutterTextObjectOuterPending)
