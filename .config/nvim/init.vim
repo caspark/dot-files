@@ -11,6 +11,8 @@ Plug 'itchyny/lightline.vim'
 Plug 'gioele/vim-autoswap' " deal with vim's swap files automatically
 let g:autoswap_detect_tmux = 1
 
+Plug 'norcalli/nvim-colorizer.lua' " render color literals in nvim
+
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
@@ -241,6 +243,9 @@ hi CursorLine ctermbg=238 guibg=#181C24
 " enable vim-surround maps for sandwich (to avoid clobbering s in normal mode)
 " https://github.com/machakann/vim-sandwich/wiki/Introduce-vim-surround-keymappings
 runtime macros/sandwich/keymap/surround.vim
+
+" make nvim-colorizer actually render colors
+lua require'colorizer'.setup()
 
 " }}} END plugin configuration
 
