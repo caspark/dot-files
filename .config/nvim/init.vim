@@ -99,6 +99,9 @@ Plug 'markonm/traces.vim' " live previews of ranges, substitutes, etc
 
 Plug 'andymass/vim-matchup' " replaces matchit, adds support for lang keywords
 
+Plug 'matze/vim-move' " move lines and visual selections around interactively
+let g:move_map_keys = 0
+
 call plug#end()
 
 " configure vim-plugged to install plugins and remove old plugins on startup
@@ -257,15 +260,13 @@ nmap <A-Left> <Plug>(swap-prev)
 nmap <A-Right> <Plug>(swap-next)
 
 " move lines down/up with alt+down/up
-nmap <A-Down> <Plug>unimpairedMoveDown
-silent! call repeat#set("\<Plug>unimpairedMoveDown", v:count)
-nmap <A-Up> <Plug>unimpairedMoveUp
-silent! call repeat#set("\<Plug>unimpairedMoveUp", v:count)
-" and move lines down/up with alt+down/up in visual mode
-xmap <A-Up> <Plug>unimpairedMoveSelectionUp
-silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", v:count)
-xmap <A-Down> <Plug>unimpairedMoveSelectionDown
-silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", v:count)
+nmap <A-Up> <Plug>MoveLineUp
+nmap <A-Down> <Plug>MoveLineDown
+" move lines down/up with alt+left/down/up/right in visual mode
+xmap <A-Left> <Plug>MoveBlockLeft
+xmap <A-Down> <Plug>MoveBlockDown
+xmap <A-Up> <Plug>MoveBlockUp
+xmap <A-Right> <Plug>MoveBlockRight
 
 " move through hunks with ctrl+down/up
 nmap <C-Down> <Plug>(GitGutterNextHunk)
