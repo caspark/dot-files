@@ -8,6 +8,9 @@ Plug 'joshdick/onedark.vim'
 
 Plug 'itchyny/lightline.vim'
 
+Plug 'gioele/vim-autoswap' " deal with vim's swap files automatically
+let g:autoswap_detect_tmux = 1
+
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
