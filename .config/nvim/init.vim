@@ -206,7 +206,6 @@ set signcolumn=yes
 set cmdheight=2
 
 " 20% fake transparency on floating window
-
 set pumblend=20
 
 " enable cursor column and line
@@ -215,9 +214,14 @@ set cursorcolumn
 
 " make cursor position more prominent for the active window
 augroup VisibleCursorLineAndColumn
-  au!
-  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline | setlocal cursorcolumn
-  au WinLeave * setlocal nocursorline | setlocal nocursorcolumn
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline | setlocal cursorcolumn
+  autocmd WinLeave * setlocal nocursorline | setlocal nocursorcolumn
+augroup END
+
+augroup OpenHelpVertically
+  autocmd!
+  autocmd FileType help :wincmd L | :vert resize 90
 augroup END
 
 " }}} END basic vim options
