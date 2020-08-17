@@ -29,6 +29,13 @@ Install the packages by passing this directory (i.e. `default.nix`) as the expre
 nix-env -f "$HOME/dotmore/nix" -iA ckrieger-devtools
 ```
 
+To update to latest versions of all nix packages from unstable branch:
+
+``` shell
+niv -s "$HOME/dotmore/nix/sources.json" update nixpkgs -b nixpkgs-unstable
+# (then install packages again)
+```
+
 To search for available packages:
 
 ``` shell
