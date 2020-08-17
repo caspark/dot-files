@@ -347,8 +347,10 @@ nnoremap <leader>vps :PlugStatus<CR>
 nnoremap <leader>vpd :PlugDiff<CR>
 nnoremap <leader>vpc :PlugClean!<CR>
 
-nnoremap <leader>ss :Rg <C-R><C-W>
+nnoremap <leader>ss :Rg<Space>
 nnoremap <leader>sS :RgRaw ''<Left>
+nnoremap <leader>sc :cdo s///gc<Left><Left><Left><Left>
+nnoremap <leader>sC :cfdo %s///gc<Left><Left><Left><Left>
 nnoremap <leader>8 :RgRaw '<C-R><C-W>' %<CR>
 nnoremap <leader>* :RgRaw '<C-R><C-A>' %<CR>
 
