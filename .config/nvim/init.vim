@@ -342,14 +342,16 @@ nnoremap <leader>tm :Marks<CR>
 nnoremap <leader>tc :bwipeout<CR>
 
 nnoremap <leader>gw :Gwrite<CR>
+nnoremap <leader>ga :Git commit --verbose --amend<CR>
 nmap <leader>gs <Plug>(GitGutterStageHunk)
 nnoremap <leader>gS :Gwrite<CR>
 nnoremap <leader>gp :Git pull<CR>
 nnoremap <leader>gP :Git push<CR>
+nnoremap <leader>gPF :Git push<CR>
 nnoremap <leader>gg :Gstatus<CR>
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gX :GDelete<CR>
-nnoremap <leader>gc :Git commit -v<CR>
+nnoremap <leader>gc :Git commit --verbose<CR>
 nnoremap <leader>gCc :Commits<CR>
 nnoremap <leader>gCb :BCommits<CR>
 nnoremap <leader>gd :Gdiffsplit<CR>
