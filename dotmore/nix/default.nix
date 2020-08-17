@@ -9,7 +9,6 @@ in pkgs // {
   ckrieger-devtools = pkgs.buildEnv {
     name = "ckrieger-devtools";
     paths = with pkgs; [
-      clang
       cmake
       cvs
       direnv
