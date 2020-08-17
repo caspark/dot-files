@@ -279,10 +279,10 @@ nmap ss <plug>(SubversiveSubstituteLine)
 nmap S <plug>(SubversiveSubstituteToEndOfLine)
 
 " allow positioning windows with Shift-Arrow (see also leader mappings)
-nmap <C-W><S-Left> <C-W>H
-nmap <C-W><S-Down> <C-W>J
-nmap <C-W><S-Up> <C-W>L
-nmap <C-W><S-Right> <C-W>L
+nnoremap <C-W><S-Left> <C-W>H
+nnoremap <C-W><S-Down> <C-W>J
+nnoremap <C-W><S-Up> <C-W>L
+nnoremap <C-W><S-Right> <C-W>L
 
 " text objects
 omap ih <Plug>(GitGutterTextObjectInnerPending)
