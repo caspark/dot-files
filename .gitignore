@@ -17,3 +17,8 @@
 !/.doom.d/**
 !/dotmore/
 !/dotmore/**
+
+# and include some files too
+!/.bashrc
+!/.asdfrc
+!/.toolversions
