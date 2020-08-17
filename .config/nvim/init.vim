@@ -278,6 +278,12 @@ nmap s <plug>(SubversiveSubstitute)
 nmap ss <plug>(SubversiveSubstituteLine)
 nmap S <plug>(SubversiveSubstituteToEndOfLine)
 
+" allow positioning windows with Shift-Arrow (see also leader mappings)
+nmap <C-W><S-Left> <C-W>H
+nmap <C-W><S-Down> <C-W>J
+nmap <C-W><S-Up> <C-W>L
+nmap <C-W><S-Right> <C-W>L
+
 " text objects
 omap ih <Plug>(GitGutterTextObjectInnerPending)
 omap ah <Plug>(GitGutterTextObjectOuterPending)
@@ -303,7 +309,12 @@ nnoremap <leader>qq :q<CR>
 nnoremap <leader>qQ :q!<CR>
 nnoremap <leader>qs :x<CR>
 
+nnoremap <leader>w <C-W>
 nnoremap <leader>ww :Windows<CR>
+nnoremap <leader>w<S-Left> <C-W>H
+nnoremap <leader>w<S-Down> <C-W>J
+nnoremap <leader>w<S-Up> <C-W>L
+nnoremap <leader>w<S-Right> <C-W>L
 
 nnoremap <leader>ff :Files<CR>
 nnoremap <leader>fr :History<CR>
