@@ -134,10 +134,8 @@ set sidescrolloff=5
 " 3) display unprintable chars as <xx> rather than ^C and ~C
 set display+=lastline,msgsep,uhex
 
-" render more unprintable characters in list views
-if &listchars ==# 'eol:$'
-  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-endif
+" render unprintable characters nicely in list view
+set listchars=tab:│·,trail:·,extends:»,precedes:«,nbsp:‡,eol:§
 
 " formatting config (:h fo-table):
 " t to wrap text to textwidth
@@ -397,19 +395,10 @@ nmap <localleader>s :SplitjoinSplit<cr>
 
 " {{{ BEGIN Todos
 " TODO
-" consider https://github.com/norcalli/nvim-colorizer.lua
 " https://github.com/mg979/vim-visual-multi
-" make reloading init.vim display message, but not initial load
-" add editorconfig support
-" consider https://github.com/jeffkreeftmeijer/neovim-sensible
 " lsp support: https://old.reddit.com/r/vim/comments/7lnhrt/which_lsp_plugin_should_i_use/
 " consider https://github.com/mhinz/neovim-remote for opening nvim from within terminal of nvim
-" https://github.com/mbbill/undotree
-" https://github.com/plasticboy/vim-markdown
-" nerd commenter
 " https://github.com/dyng/ctrlsf.vim for search and replace across files?
-" set up maps for gitgutter - https://github.com/airblade/vim-gitgutter
-" set up statusline - gitgutter and fugitive should contribute
 
 " see also:
 " https://learnvimscriptthehardway.stevelosh.com/
@@ -420,5 +409,4 @@ nmap <localleader>s :SplitjoinSplit<cr>
 " https://github.com/HugoForrat/LaTeX-Vim-User-Manual
 " }}} END Todos
 
-echo "init.vim loaded!"
 " vim: filetype=vim foldmethod=marker foldlevel=10 foldcolumn=3
