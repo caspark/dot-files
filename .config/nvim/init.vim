@@ -21,8 +21,6 @@ Plug 'editorconfig/editorconfig-vim'
 
 Plug 'sheerun/vim-polyglot' " language packs for all the languages
 
-Plug 'unblevable/quick-scope'
-
 Plug 'tyru/capture.vim' " show command output in buffer with :Capture
 
 " text objects
