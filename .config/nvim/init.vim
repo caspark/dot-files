@@ -347,6 +347,8 @@ nnoremap <leader>vps :PlugStatus<CR>
 nnoremap <leader>vpd :PlugDiff<CR>
 nnoremap <leader>vpc :PlugClean!<CR>
 
+nnoremap <leader>rs :exec '!'.getline('.')
+
 nnoremap <leader>ss :Rg<Space>
 nnoremap <leader>sS :RgRaw ''<Left>
 nnoremap <leader>sc :cdo s///gc<Left><Left><Left><Left>
