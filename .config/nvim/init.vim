@@ -13,8 +13,9 @@ let g:autoswap_detect_tmux = 1
 
 Plug 'norcalli/nvim-colorizer.lua' " render color literals in nvim
 
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf' " the fuzzy finder to rule them all
+Plug 'junegunn/fzf.vim' " actually make the fuzzy finder integrated into vim
+Plug 'jesseleite/vim-agriculture' " allow passing args to rg fzf integration
 
 Plug 'machakann/vim-highlightedyank'
 let g:highlightedyank_highlight_duration = 150
@@ -345,6 +346,11 @@ nnoremap <leader>vpg :PlugUpgrade<CR>
 nnoremap <leader>vps :PlugStatus<CR>
 nnoremap <leader>vpd :PlugDiff<CR>
 nnoremap <leader>vpc :PlugClean!<CR>
+
+nnoremap <leader>ss :Rg <C-R><C-W>
+nnoremap <leader>sS :RgRaw ''<Left>
+nnoremap <leader>8 :RgRaw '<C-R><C-W>' %<CR>
+nnoremap <leader>* :RgRaw '<C-R><C-A>' %<CR>
 
 nnoremap <leader>tt :Buffers<CR>
 nnoremap <leader>tm :Marks<CR>
