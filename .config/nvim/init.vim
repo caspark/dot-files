@@ -412,6 +412,7 @@ nmap <localleader>s :SplitjoinSplit<cr>
 " lsp support: https://old.reddit.com/r/vim/comments/7lnhrt/which_lsp_plugin_should_i_use/
 " consider https://github.com/mhinz/neovim-remote for opening nvim from within terminal of nvim
 " https://github.com/dyng/ctrlsf.vim for search and replace across files?
+" set up https://github.com/bronson/vim-visual-star-search and use it for Rg/RgRaw too
 
 " see also:
 " https://learnvimscriptthehardway.stevelosh.com/
