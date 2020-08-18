@@ -330,6 +330,10 @@ nnoremap <leader>ff :Files<CR>
 nnoremap <leader>fr :History<CR>
 nnoremap <leader>fl :Locate ''<Left>
 nnoremap <leader>fs :w<CR>
+nnoremap <leader>fR :let @+=expand("%") \| echo "yanked relative path into \" register: " . getreg('+')<CR>
+nnoremap <leader>fF :let @+=expand("%:p") \| echo "yanked absolute path into \" register: " . getreg('+')<CR>
+nnoremap <leader>fT :let @+=expand("%:t") \| echo "yanked filename into \" register:" . getreg('+')<CR>
+nnoremap <leader>fD :let @+=expand("%:p:h") \| echo "yanked directory name into \" register: " . getreg('+')<CR>
 
 nnoremap <leader>p "+p
 nnoremap <leader>P "+P
@@ -392,10 +396,8 @@ nnoremap <leader>ua :Wall
 nnoremap <leader>usw :SudoWrite
 nnoremap <leader>use :SudoEdit
 
-vnoremap <leader>y "+y
 nnoremap <leader>Y "+yg_
 nnoremap <leader>y "+y
-nnoremap <leader>yy "+yy
 
 " }}} END leader key mappings
 
