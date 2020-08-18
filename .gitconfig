@@ -1,18 +1,14 @@
 [user]
-    name = Caspar Krieger
-    email = git@asparck.com
-
+	name = Caspar Krieger
+	email = git@asparck.com
 [color]
-    branch = auto
-    diff = auto
-    status = auto
-
+	branch = auto
+	diff = auto
+	status = auto
 [alias]
-    g = log --graph --oneline --format=format:'%C(bold blue)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset) (%an, %ar)'
-
+	g = log --graph --oneline --format=format:'%C(bold blue)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset) (%an, %ar)'
 [push]
-    default = upstream
-
+	default = upstream
 [core]
 	excludesfile = /home/caspar/.gitignore_global
 [pull]
