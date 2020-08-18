@@ -301,8 +301,6 @@ xmap ih <Plug>(GitGutterTextObjectInnerVisual)
 xmap ah <Plug>(GitGutterTextObjectOuterVisual)
 
 " liuchengxu/vim-which-key
-" since space is a "fake leader", we bind to it directly as well as to our
-" real leader
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 nnoremap <silent> <localleader> :WhichKey ','<CR>
 " also explain some other common "leader-like" keys
