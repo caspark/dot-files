@@ -40,7 +40,7 @@ SETUVAR fish_pager_color_completion:B3A06D
 SETUVAR fish_pager_color_description:B3A06D
 SETUVAR fish_pager_color_prefix:cyan\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
-SETUVAR fish_user_paths:/home/caspar/dotmore/bin\x1e/home/caspar/\x2eemacs\x2ed/bin\x1e/home/caspar/\x2epoetry/bin\x1e/home/ckrieger/src/dot\x2dfiles/bin\x1e/home/ckrieger/\x2easdf/shims\x1e/home/ckrieger/\x2ecargo/bin\x1e/home/ckrieger/\x2ecargo/bin\x1e/home/ckrieger/\x2elocal/bin/\x1e/home/ckrieger/\x2efzf/bin\x1e/home/ckrieger/\x2eyarn/bin\x1e/home/caspar/\x2efzf/bin
+SETUVAR fish_user_paths:/home/caspar/dotmore/bin\x1e/home/caspar/\x2eemacs\x2ed/bin\x1e/home/caspar/\x2epoetry/bin\x1e/home/ckrieger/src/dot\x2dfiles/bin\x1e/home/ckrieger/\x2easdf/shims\x1e/home/ckrieger/\x2ecargo/bin\x1e/home/ckrieger/\x2ecargo/bin\x1e/home/ckrieger/\x2elocal/bin/\x1e/home/ckrieger/\x2efzf/bin\x1e/home/ckrieger/\x2eyarn/bin\x1e/home/caspar/\x2efzf/bin\x1e/home/ckrieger/\x2eyarn/bin
 SETUVAR pure_begin_prompt_with_current_directory:true
 SETUVAR pure_color_command_duration:pure_color_warning
 SETUVAR pure_color_current_directory:pure_color_primary
