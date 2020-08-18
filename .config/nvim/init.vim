@@ -426,4 +426,4 @@ nmap <localleader>s :SplitjoinSplit<cr>
 " https://github.com/HugoForrat/LaTeX-Vim-User-Manual
 " }}} END Todos
 
-" vim: filetype=vim foldmethod=marker foldlevel=10 foldcolumn=3
+" vim: filetype=vim foldmethod=marker foldlevel=10 foldcolumn=3 textwidth=0
