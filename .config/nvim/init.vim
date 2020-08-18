@@ -371,6 +371,7 @@ nnoremap <leader>gS :Gwrite<CR>
 nnoremap <leader>gp :Git pull<CR>
 nnoremap <leader>gP :Git push<CR>
 nnoremap <leader>gPF :Git push<CR>
+nmap <leader>gv <Plug>(GitGutterPreviewHunk)
 nnoremap <leader>gg :Gstatus<CR>
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gX :GDelete<CR>
