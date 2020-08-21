@@ -353,6 +353,8 @@ nnoremap <leader>rs :exec '!'.getline('.')
 
 nnoremap <leader>ss :Rg<Space>
 nnoremap <leader>sS :RgRaw ''<Left>
+nnoremap <leader>st :RgRaw '<C-R><C-W>'<CR>
+nnoremap <leader>sT :RgRaw '<C-R><C-A>'<CR>
 nnoremap <leader>sc :cdo s///gc<Left><Left><Left><Left>
 nnoremap <leader>sC :cfdo %s///gc<Left><Left><Left><Left>
 nnoremap <leader>8 :RgRaw '<C-R><C-W>' %<CR>
