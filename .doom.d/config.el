@@ -33,7 +33,10 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type nil)
+
+;; stop github markdown from prompting for language when inserting a code
+(setq markdown-gfm-use-electric-backquote nil)
 
 ; a bunch of settings
 (setq
