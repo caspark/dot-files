@@ -399,6 +399,8 @@ nnoremap <leader>use :SudoEdit
 
 nnoremap <leader>Y "+yg_
 nnoremap <leader>y "+y
+vnoremap <leader>Y "+yg_
+vnoremap <leader>y "+y
 
 " }}} END leader key mappings
 
