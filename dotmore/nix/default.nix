@@ -9,6 +9,11 @@ in pkgs // {
   ckrieger-devtools = pkgs.buildEnv {
     name = "ckrieger-devtools";
     paths = with pkgs; [
+      aspell
+      aspellDicts.en
+      aspellDicts.en-computers
+      aspellDicts.en-science
+      clang
       cmake
       cvs
       direnv
@@ -30,6 +35,7 @@ in pkgs // {
       niv
       nixfmt
       pandoc
+      proselint
       python38Full
       python38Packages.isort
       ripgrep
