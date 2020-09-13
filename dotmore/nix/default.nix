@@ -13,7 +13,6 @@ in pkgs // {
       aspellDicts.en
       aspellDicts.en-computers
       aspellDicts.en-science
-      clang
       cmake
       cvs
       direnv
