@@ -17,6 +17,10 @@
 !/.doom.d/**
 !/dotmore/
 !/dotmore/**
+!/.tmux/
+!/.tmux/plugins
+!/.tmux/plugins/tpm/
+!/.tmux/plugins/tpm/**
 
 # and include some files too
 !/.bashrc
