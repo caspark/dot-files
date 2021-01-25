@@ -6,6 +6,8 @@
 # for some directories, we know we want to track everything
 # sadly they have to be unignored (at least) twice: https://stackoverflow.com/a/5285539/775982
 # nested dirs also need to have their parent directories unignored
+!/.asdf
+!/.asdf/**
 !/.config/
 !/.config/fish/
 !/.config/fish/**
