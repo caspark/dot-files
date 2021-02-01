@@ -1,0 +1,208 @@
+#!/usr/bin/env ruby
+#
+# A script that makes it very easy to create a Jira issue and swap to a branch named after that Jira issue.
+# Intended for lowering the friction to fix adhoc problems noticed when Jira is slow and Jira issues are required.
+#
+# Save to e.g. ~/.local/bin/fixit and chmod +x to make executable, then run it.
+
+require 'yaml'
+require 'optparse'
+require 'rubygems'
+require 'jira-ruby'
+
+JIRA_PROJECT_KEY_REGEX = /^[A-Z]{2,10}$/
+
+module Config
+  CONFIG_FILE_PATH = "#{Dir.home}/.fixit.yml"
+
+  begin
+    config_file = YAML.load_file(CONFIG_FILE_PATH)
+  rescue
+    puts "Config file not found at #{CONFIG_FILE_PATH} so created default there.
+Edit it to enter in your API tokens and such, then try again."
+    defaults = {
+      'jira' => {
+        'url' => 'https://something.atlassian.net/',
+        'username' => 'your@email',
+        'api_token' => '__fill_this_in_from_https://id.atlassian.com/manage-profile/security/api-tokens__',
+        'default_project_key' => 'FOO',
+        'default_issue_type' => 'Task',
+      }
+    }
+    File.write(CONFIG_FILE_PATH, defaults.to_yaml)
+    exit 1
+  end
+
+  JIRA_URL = config_file.dig('jira', 'url')
+  raise "Error in #{CONFIG_FILE_PATH}: invalid Jira URL - make sure there's a trailing slash. E.g. https://statuspage.atlassian.net/" unless /https:\/\/.*\.atlassian\.net\// =~ JIRA_URL
+
+  JIRA_USERNAME = config_file.dig('jira', 'username')
+  raise "Error in #{CONFIG_FILE_PATH}: invalid Jira username - make sure it's an email" unless /.+@.+/ =~ JIRA_USERNAME
+
+  JIRA_API_TOKEN = config_file.dig('jira', 'api_token')
+  raise "Error in #{CONFIG_FILE_PATH}: invalid Jira API token - should be a sequence of 24 alphanumeric chars" unless /[a-zA-Z0-9]{24}/ =~ JIRA_API_TOKEN
+
+  JIRA_DEFAULT_PROJECT_KEY = config_file.dig('jira', 'default_project_key')
+  raise "Error in #{CONFIG_FILE_PATH}: invalid Jira default project key - should match the regex #{JIRA_PROJECT_KEY_REGEX}" unless JIRA_PROJECT_KEY_REGEX =~ JIRA_DEFAULT_PROJECT_KEY
+
+  JIRA_DEFAULT_ISSUE_TYPE_NAME = config_file.dig('jira', 'default_issue_type')
+  raise "Error in #{CONFIG_FILE_PATH}: invalid Jira default issue type - must not be empty" if JIRA_DEFAULT_ISSUE_TYPE_NAME.empty?
+
+end
+
+class Main
+  attr_reader :verbose, :issue_summary
+
+  def run
+    parse_args!
+
+    jira_issue_key
+
+    short_summary = issue_summary[0, 40].split.join('-')
+    branch_name = "#{jira_issue_key}-#{short_summary}"
+    log "Creating new git branch '#{branch_name}' and switching to it"
+    `git checkout -b "#{branch_name}"`
+  end
+
+  def parse_args!
+    banner = "Usage:
+fixit.rb [options] short text summary of issue being fixed
+OR choose a project with
+fixit.rb [options] JIRAKEY short text summary of issue being fixed
+"
+
+    OptionParser.new do |opts|
+      opts.banner = banner
+
+      opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+        @verbose = v
+      end
+
+      opts.on("-h", "--help", "Prints this help") do
+        puts opts
+        exit
+      end
+    end.parse!
+
+    if JIRA_PROJECT_KEY_REGEX =~ ARGV[0]
+      @jira_project_key = ARGV.slice!(0)
+      debug "Using specified jira project key of #{@jira_project_key}"
+    end
+
+    @issue_summary = ARGV[0..].join(" ")
+    if @issue_summary.strip.empty?
+      debug "Missing summary"
+      puts banner
+      exit 1
+    else
+      debug "Parsed summary of '#{issue_summary}'"
+    end
+  end
+
+  def jira_client
+    @jira_client ||= begin
+                       debug "Creating Jira client for #{Config::JIRA_USERNAME} @ #{Config::JIRA_URL}"
+                       JIRA::Client.new({
+                                          username: Config::JIRA_USERNAME,
+                                          password: Config::JIRA_API_TOKEN,
+                                          site: Config::JIRA_URL,
+                                          context_path: '',
+                                          auth_type: :basic,
+                                          read_timeout: 120
+                                        })
+                     end
+  end
+
+  def jira_project_key
+    @jira_project_key ||= begin
+                            debug "No Jira project key set so falling back to default of #{Config::JIRA_DEFAULT_PROJECT_KEY}"
+                            Config::JIRA_DEFAULT_PROJECT_KEY
+                          end
+  end
+
+  def jira_project_id
+    @jira_project_id ||= begin
+                           debug "Finding Jira project ID for #{jira_project_key}"
+                           projects = jira_client.Project.all
+                           project = projects.find { |p| p.key == jira_project_key }
+                           debug "Found matching Jira project with name #{project.name}; will use project ID of #{project.id}"
+                           project.id
+                         end
+  end
+
+  def jira_issue_type_name
+    @jira_issue_type_name ||= begin
+                                debug "No Jira issue type name set so falling back to default of #{Config::JIRA_DEFAULT_ISSUE_TYPE_NAME}"
+                                Config::JIRA_DEFAULT_ISSUE_TYPE_NAME
+                              end
+  end
+
+  def jira_issue_type_id
+    @jira_issue_type_id ||= begin
+                              debug "Finding Jira issue type ID for #{jira_issue_type_name} in project #{jira_project_id}"
+                              issue_types = jira_client.Issuetype.all
+                              debug "Found #{issue_types.count} issue types"
+
+                              debug "Filtering out issue types whose names are not #{jira_issue_type_name}"
+                              issue_types = issue_types.filter do |issue_type|
+                                issue_type.name == jira_issue_type_name
+                              end
+                              debug "#{issue_types.count} issue types remain"
+
+                              debug "Finding issue types scoped to the project"
+                              project_issue_types = issue_types.filter do |issue_type|
+                                issue_type.respond_to?(:scope) && issue_type.scope['type'] == 'PROJECT' && issue_type.scope.dig('project', 'id') == jira_project_id
+                              end
+                              debug "#{project_issue_types.count} matching issue types scoped to project"
+
+                              issue_type_pool = if project_issue_types.count > 0
+                                                  project_issue_types
+                                                else
+                                                  debug "No issue types scoped to the project found, so falling back to global issue types"
+                                                  global_issue_types = issue_types.filter do |issue_type|
+                                                    !issue_type.respond_to?(:scope)
+                                                  end
+                                                  debug "#{global_issue_types.count} matching global issue types"
+                                                  global_issue_types
+                                                end
+
+                              if issue_type_pool.size == 1
+                                debug "Locking in single remaining issue type with id of #{issue_type_pool[0].id}"
+                                issue_type_pool[0].id
+                              else
+                                raise "Failed to find issue type matching name of #{jira_issue_type_name} for project #{jira_project_key}"
+                              end
+                            end
+  end
+
+  def jira_issue_key
+    @jira_issue_key ||= begin
+                          log "Creating issue in #{jira_project_key} of '#{issue_summary}'"
+                          issue = jira_client.Issue.build
+                          payload = { "fields" =>
+                                        {
+                                          "issuetype" => { "id" => jira_issue_type_id },
+                                          "project" => { "id" => jira_project_id },
+                                          "summary" => issue_summary
+                                        }
+                          }
+                          debug "About to save issue with payload of #{payload}"
+                          issue.save(payload)
+                          debug "Saving done, fetching issue again to get key..."
+                          issue.fetch
+                          debug "Fetched issue #{issue}, key is #{issue.key}"
+                          log "Created #{Config::JIRA_URL}browse/#{issue.key}"
+                          issue.key
+                        end
+  end
+
+  def log(msg)
+    puts msg
+  end
+
+  def debug(msg)
+    puts "DEBUG: #{msg}" if verbose
+  end
+end
+
+Main.new.run
