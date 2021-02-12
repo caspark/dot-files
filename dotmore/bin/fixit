@@ -56,8 +56,6 @@ class Main
   def run
     parse_args!
 
-    jira_issue_key
-
     short_summary = issue_summary[0, 40].split.join('-')
     branch_name = "#{jira_issue_key}-#{short_summary}"
     log "Creating new git branch '#{branch_name}' and switching to it"
@@ -175,6 +173,15 @@ fixit.rb [options] JIRAKEY short text summary of issue being fixed
                             end
   end
 
+  def jira_user
+    @jira_user ||= begin
+                     debug "Fetching jira user for #{Config::JIRA_USERNAME}"
+                     jira_user = jira_client.User.myself
+                     debug "Found jira user of #{jira_user} for query #{Config::JIRA_USERNAME}"
+                     jira_user
+                   end
+  end
+
   def jira_issue_key
     @jira_issue_key ||= begin
                           log "Creating issue in #{jira_project_key} of '#{issue_summary}'"
@@ -183,7 +190,8 @@ fixit.rb [options] JIRAKEY short text summary of issue being fixed
                                         {
                                           "issuetype" => { "id" => jira_issue_type_id },
                                           "project" => { "id" => jira_project_id },
-                                          "summary" => issue_summary
+                                          "summary" => issue_summary,
+                                          "assignee" => jira_user,
                                         }
                           }
                           debug "About to save issue with payload of #{payload}"
