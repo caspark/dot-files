@@ -50,6 +50,48 @@ Edit it to enter in your API tokens and such, then try again."
 
 end
 
+module JIRA
+  class Client
+    def boards_for_project(projectKey)
+      path = "/rest/agile/1.0/board?projectKeyOrId=#{projectKey}"
+      response = get(path)
+      json = JSON.parse(response.body)
+      results = json['values']
+
+      until json['isLast']
+        params = { 'startAt' => (json['startAt'] + json['maxResults']).to_s }
+        response = get(url_with_query_params(path, params))
+        json = JSON.parse(response.body)
+        results += json['values']
+      end
+
+      results.map do |board|
+        self.Board.build(board)
+      end
+    end
+
+    def move_issue_onto_kanban_board(issue, board)
+      post("/rest/agile/1.0/board/#{board.id}/issue", { issues: [issue.id] }.to_json)
+    end
+
+    def get_issues_for_board_backlog(board)
+      path = "/rest/agile/1.0/board/#{board.id}/backlog"
+      response = get(path)
+      json = JSON.parse(response.body)
+      results = json['issues']
+
+      while (json['startAt'] + json['maxResults']) < json['total']
+        startAt = (json['startAt'] + json['maxResults'])
+        response = get(path + '?startAt=' + startAt)
+        json = JSON.parse(response.body)
+        results += json['issues']
+      end
+
+      results.map { |issue| self.Issue.build(issue) }
+    end
+  end
+end
+
 class Main
   attr_reader :verbose, :issue_summary
 
@@ -182,6 +224,20 @@ fixit.rb [options] JIRAKEY short text summary of issue being fixed
                    end
   end
 
+  def jira_board
+    @jira_board ||= begin
+                      debug "Fetching jira boards for #{jira_project_key}"
+                      boards = jira_client.boards_for_project(jira_project_key)
+                      debug "Found boards of #{boards}"
+                      if boards.size == 0
+                        raise StandardError, "No jira board found for project #{jira_project_key}"
+                      elsif boards.size > 1
+                        raise StandardError, "Multiple jira boards found for project #{jira_project_key}, not sure which to use:\n#{boards.join("\n")}"
+                      end
+                      boards.first
+                    end
+  end
+
   def jira_issue_key
     @jira_issue_key ||= begin
                           log "Creating issue in #{jira_project_key} of '#{issue_summary}'"
@@ -198,10 +254,78 @@ fixit.rb [options] JIRAKEY short text summary of issue being fixed
                           issue.save(payload)
                           debug "Saving done, fetching issue again to get key..."
                           issue.fetch
-                          debug "Fetched issue #{issue}, key is #{issue.key}"
-                          log "Created #{Config::JIRA_URL}browse/#{issue.key}"
+                          issue_url = "#{Config::JIRA_URL}browse/#{issue.key}"
+                          debug "Fetched issue #{issue}, key is #{issue.key} and URL will be #{issue_url}"
+
+                          debug "Moving #{issue.key} onto board #{jira_board.name}..."
+                          issue_location = move_issue_onto_board_and_return_location(issue, jira_board)
+                          debug "Done with trying to move issue onto board"
+
+                          log "Created #{issue_url} #{issue_location}"
                           issue.key
                         end
+  end
+
+  # Does its level best to move the issue onto the board proper.
+  # Yes, it's crazy that it takes this much effort.
+  def move_issue_onto_board_and_return_location(issue, board)
+    debug "Fetching active sprints for board #{board.name}"
+    active_sprints = board.sprints(state: :active)
+    debug "Found active sprints of #{active_sprints}"
+    if active_sprints.size == 0
+      debug "Aborting issue move - no active sprints found"
+      "(not on board - no active sprints found for board '#{board.name}')"
+    else
+      if active_sprints.size > 1
+        sprints_desc = active_sprints.map { |s| "'#{s.name}'" }.join(", ")
+        log "WARNING: #{active_sprints.size} active sprints found for board '#{board.name}' (#{sprints_desc}) - the first sprint will be used!"
+      end
+      sprint = active_sprints.first
+      debug "Locked in active sprint of #{sprint.name} & moving issue into it"
+      sprint.add_issue(issue)
+      debug "Issue move into sprint succeeded"
+
+      "in Scrum sprint '#{sprint.name}' on board '#{board.name}'"
+    end
+  rescue JIRA::HTTPError => e
+    debug "Failed moving issue into sprint; response body is #{e.response.body}"
+    error_body = JSON.parse(e.response.body)
+    if error_body.dig('errorMessages').any? { |msg| msg == "The board does not support sprints" }
+      debug "Board doesn't support sprints, so attempting to move issue onto Kanban board"
+      begin
+        jira_client.move_issue_onto_kanban_board(issue, board)
+        "on Kanban board '#{jira_board.name}'"
+      rescue JIRA::HTTPError => e
+        debug "Failed moving issue onto Kanban board; response body is #{e.response.body}"
+
+        error_body = JSON.parse(e.response.body)
+        if error_body.dig('errorMessages').any? { |msg| msg.start_with? "Unable to transition the issues to" }
+          debug "Checking if issue is already on the board"
+          debug "Fetching board issues"
+          board_issues = board.issues
+          debug "Fetched #{board_issues.size} board issues"
+          if board_issues.none? { |i| i.key == issue.key }
+            debug "Issue is not included in issues in the board, so giving up"
+            "not on Kanban board (issue seems to be excluded from board)"
+          else
+            debug "issue is on the board, but not clear whether it's on the backlog, so fetching backlog issues"
+            # absurdly, there doesn't seem to be a way to find issues not in the backlog, so we do this hack
+            backlog_issues = jira_client.get_issues_for_board_backlog(board)
+            debug "Fetched #{board_issues.size} backlog issues"
+            if backlog_issues.none? { |i| i.key == issue.key }
+              debug "Issue not found in backlog, so assuming issue must already be on the board"
+              "on Kanban board '#{jira_board.name}'"
+            else
+              raise
+            end
+          end
+        else
+          raise
+        end
+      end
+    else
+      raise
+    end
   end
 
   def log(msg)
