@@ -16,6 +16,7 @@ in pkgs // {
       cmake
       cvs
       direnv
+      dos2unix
       dtrx
       emacsUnstable
       entr
