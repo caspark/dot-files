@@ -123,8 +123,6 @@ fi
 #
 # *****************************************************************************
 
-source "$HOME/src/dot-files/.bashextras"
-
 alias ep="dtrx --one-entry rename --noninteractive"
 
 function parse_git_dirty {
