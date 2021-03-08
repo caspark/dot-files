@@ -5,6 +5,7 @@
 	branch = auto
 	diff = auto
 	status = auto
+	pager = false
 [alias]
 	g = log --graph --oneline --format=format:'%C(bold blue)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset) (%an, %ar)'
     co = checkout
@@ -16,6 +17,7 @@
 	default = upstream
 [core]
 	excludesfile = /home/caspar/.gitignore_global
+	pager = tig
 [pull]
 	rebase = true
 [filter "lfs"]

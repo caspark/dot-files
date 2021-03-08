@@ -46,6 +46,7 @@ in pkgs // {
       shellcheck
       sshpass
       subversion
+      tig
       tmux
       wordnet
       xsv
