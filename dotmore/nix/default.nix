@@ -41,6 +41,7 @@ in pkgs // {
       python38Full
       python38Packages.isort
       ripgrep
+      rlwrap
       ruby
       rustup
       shellcheck
