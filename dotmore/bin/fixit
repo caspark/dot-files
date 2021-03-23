@@ -98,8 +98,8 @@ class Main
   def run
     parse_args!
 
-    short_summary = issue_summary[0, 40].split.join('-')
-    branch_name = "#{jira_issue_key}-#{short_summary}"
+    short_summary = issue_summary[0, 60]
+    branch_name = "#{jira_issue_key}-#{short_summary}".gsub(/[^a-zA-Z0-9]+/, '-')
     log "Creating new git branch '#{branch_name}' and switching to it"
     `git checkout -b "#{branch_name}"`
   end
