@@ -15,6 +15,7 @@ in pkgs // {
       aspellDicts.en-science
       cloc
       cmake
+      colordiff
       cvs
       direnv
       dos2unix
