@@ -41,6 +41,7 @@ in pkgs // {
       proselint
       python38Full
       python38Packages.isort
+      qpdf
       ripgrep
       rlwrap
       ruby
