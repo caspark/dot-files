@@ -35,6 +35,7 @@ in pkgs // {
       mercurialFull
       mosh
       neovim
+      navi
       niv
       nixfmt
       pandoc
