@@ -7,11 +7,14 @@
 	status = auto
 	pager = false
 [alias]
+    a = add -p
 	g = log --graph --oneline --format=format:'%C(bold blue)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset) (%an, %ar)'
     co = checkout
     cv = commit -v
+    cva = commit -v --amend
     r = reset
     pu = push -u origin HEAD
+    puf = push -u origin HEAD --force-with-lease
     msg = log --no-merges --reverse master..HEAD --format=%B
 [push]
 	default = upstream
