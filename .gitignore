@@ -17,14 +17,17 @@
 !/.config/nvim/**
 !/.doom.d/
 !/.doom.d/**
-!/dotmore/
-!/dotmore/**
 !/.tmux/
 !/.tmux/plugins
 !/.tmux/plugins/tpm/
 !/.tmux/plugins/tpm/**
+!/dotmore/
+!/dotmore/**
 
 # and include some files too
-!/.bashrc
 !/.asdfrc
+!/.bashrc
+!/.sdkman
+!/.sdkman/etc
+!/.sdkman/etc/config
 !/.toolversions
