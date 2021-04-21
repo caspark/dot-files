@@ -8,7 +8,7 @@
 	pager = false
 [alias]
     a = add -p
-	g = log --graph --oneline --format=format:'%C(bold blue)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset) (%an, %ar)'
+    g = log --graph --oneline --format=format:'%C(bold blue)%h%C(reset)%C(auto)%d%C(reset) %C(white)%s%C(reset) (%an, %ar)'
     co = checkout
     cv = commit -v
     cva = commit -v --amend
