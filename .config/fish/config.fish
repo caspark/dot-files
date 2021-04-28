@@ -48,7 +48,7 @@ if type -q (which wsl.exe)
     if test -d /run/WSL/ # and we're on WSL 2, then...
         # echo "wsl version is 2"
         # we need to set our X server DISPLAY variable to the windows host box (assuming it's wsl2)
-        set -g -x DISPLAY (grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0.0
+        set -g -x DISPLAY (route -n | grep -m1 '^0.0.0.0' | awk '{ print $2; }'):0.0
     else # we're on WSL 1
         # echo "wsl version is 1"
         # we need to get Docker to talk to the docker-daemon over TCP using TLS
