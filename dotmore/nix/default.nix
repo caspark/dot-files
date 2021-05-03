@@ -52,6 +52,7 @@ in pkgs // {
       subversion
       tig
       tmux
+      vmtouch
       wordnet
       xsv
       youtube-dl
