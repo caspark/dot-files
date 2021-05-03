@@ -42,18 +42,39 @@ bootstrap a new system. See `dotmore/nix/README.md` for info.
 
 * To install nix packages, run `sync-nix.sh``
 
-### Emacs
-
-Emacs is currently my editor of choice, using the Doom Emacs distribution.
-Emacs is installed via nix, which makes it easy to compile the latest
-"unstable" build from source, as recommended by Doom. Doom source code lives at
-`/emacs.d/`, managed as a submodule. 
-
-* To bootstrap the editor, first install emacs, then run `sync-emacs.sh'
-
 ### Vim
 
-I maintain a poor person's setup of Neovim too, for when I inevitably break Emacs :)
+I maintain a moderately tricked-out setup of Neovim too, as it's great for
+quickly editing files without waiting for a full IDE to load up.
+
+My config is based around using <kbd>Space</kbd> as my leader key, and much of
+the keybinds are inspired by the Vim-mode provided by Spacemacs/Doom - e.g.
+`space, f, s` to save a file, `space q q` to without saving, `ctrl+c, ctrl+c`
+to quit and save etc.
+
+* To bootstrap the plugins, make sure `fzf` is installed, start `nvim`, ignore
+  the errors on startup, and hit `space v p i` (mnemonic "Vim Plugin Install")
+  to install plugins via [vim-plug](https://github.com/junegunn/vim-plug).
+
+Plugins can be updated with `space v p u` (mnemonic "Vim Plugin Update"), but
+note that this sometimes breaks things via my particular config: sometimes this
+installs plugins which require newer versions of utils than what I have
+configured `nix` to install (specifically: fzf seems to fall prey to this a
+lot: newer versions of the fzf plugin get released that rely on fzf versions
+that aren't available in my pinned version of the nix repo; this won't be a
+problem if you just install fzf separately).
+
+### Emacs
+
+I keep a somewhat-working build of Emacs around, using the Doom Emacs
+distribution, because [magit](https://magit.vc/) is just an amazing piece of
+software even though Emacs as a whole tends to frustrate me with its slowness.
+
+Emacs is installed via nix, which makes it easy to compile the latest
+"unstable" build from source, as recommended by Doom. Doom source code lives at
+`/emacs.d/`, managed as a submodule.
+
+* To bootstrap the editor, first install emacs, then run `sync-emacs.sh'
 
 ### Windows
 
