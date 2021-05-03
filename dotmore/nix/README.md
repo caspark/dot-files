@@ -27,12 +27,23 @@ Install the packages by passing this directory (i.e. `default.nix`) as the expre
 
 ``` shell
 nix-env -f "$HOME/dotmore/nix" -iA ckrieger-devtools
+# or alternatively
+../bin/sync-nix.sh
 ```
 
-To update to latest versions of all nix packages from unstable branch:
+To update to latest versions of all nix packages from release-20.09 branch:
 
 ``` shell
-niv -s "$HOME/dotmore/nix/sources.json" update nixpkgs -b nixpkgs-unstable
+cd "$HOME/dotmore/"
+niv update nixpkgs -b release-20.09
+# (then install packages again)
+```
+
+Note that there is also an unstable set of packages which can be updated like:
+
+``` shell
+cd "$HOME/dotmore/"
+niv update nixpkgs -b nixpkgs-unstable
 # (then install packages again)
 ```
 
@@ -47,4 +58,3 @@ nix search -f "$HOME/dotmore/nix" python
 # may need to occasionally update the cache too:
 nix search -u
 ```
-

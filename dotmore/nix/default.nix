@@ -5,6 +5,7 @@ let
       (import sources.emacs-overlay)
     ];
   };
+  pkgs-unstable = import sources.nixpkgs-unstable {};
 in pkgs // {
   ckrieger-devtools = pkgs.buildEnv {
     name = "ckrieger-devtools";
@@ -25,7 +26,7 @@ in pkgs // {
       fd
       firefox
       fish
-      fzf
+      pkgs-unstable.fzf
       git
       htop
       ispell
@@ -35,7 +36,6 @@ in pkgs // {
       mercurialFull
       mosh
       neovim
-      navi
       niv
       nixfmt
       pandoc
