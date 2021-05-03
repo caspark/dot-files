@@ -48,14 +48,17 @@ I maintain a moderately tricked-out setup of Neovim too, as it's great for
 quickly editing files without waiting for a full IDE to load up.
 
 My config is based around using <kbd>Space</kbd> as my leader key, and much of
-the keybinds are inspired by the Vim-mode provided by Spacemacs/Doom - e.g.
+the keybinds are inspired by the Vim-mode provided by Spacemacs/Doom: e.g.
 `space, f, s` to save a file, `space, q, q` to without saving, `ctrl+c, ctrl+c`
-to quit and save etc.
+to quit and save etc, and I tend to use standard Emacs edit mode bindings like
+`ctrl+a`/`ctrl+e` to go to start/end of line while in Insert mode.
 
 * To bootstrap the plugins, make sure `fzf` is installed, start `nvim`, ignore
   the errors on startup, and hit `space, v, p, i` (mnemonic "Vim Plugin
   Install") to install plugins via
   [vim-plug](https://github.com/junegunn/vim-plug).
+
+Note that this config specifically only works with Neovim, not (e.g.) Vim 8, which is why the config is at `/.config/nvim/init.vim` rather than `/.vimrc`.
 
 Plugins can be updated with `space v p u` (mnemonic "Vim Plugin Update"), but
 note that this sometimes breaks things via my particular config: sometimes this
