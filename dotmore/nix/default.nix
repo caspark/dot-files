@@ -28,6 +28,7 @@ in pkgs // {
       fish
       pkgs-unstable.fzf
       git
+      gitAndTools.git-extras
       htop
       ispell
       jq
