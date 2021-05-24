@@ -26,9 +26,9 @@ in pkgs // {
       fd
       firefox
       fish
-      pkgs-unstable.fzf
       git
       gitAndTools.git-extras
+      graphviz
       htop
       ispell
       jq
@@ -40,6 +40,7 @@ in pkgs // {
       niv
       nixfmt
       pandoc
+      pkgs-unstable.fzf
       proselint
       python38Full
       python38Packages.isort
