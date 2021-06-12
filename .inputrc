@@ -1,0 +1,4 @@
+"\e[Z": complete
+#"\C-h": backward-kill-word
+
+set bell-style none

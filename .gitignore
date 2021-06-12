@@ -27,7 +27,9 @@
 # and include some files too
 !/.asdfrc
 !/.bashrc
+!/.inputrc
 !/.sdkman
 !/.sdkman/etc
 !/.sdkman/etc/config
 !/.toolversions
+!/.zshrc

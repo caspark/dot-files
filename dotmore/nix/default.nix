@@ -10,6 +10,7 @@ in pkgs // {
   ckrieger-devtools = pkgs.buildEnv {
     name = "ckrieger-devtools";
     paths = with pkgs; [
+      antigen
       aspell
       aspellDicts.en
       aspellDicts.en-computers
@@ -41,6 +42,7 @@ in pkgs // {
       nixfmt
       pandoc
       pkgs-unstable.fzf
+      pkgs-unstable.starship
       proselint
       python38Full
       python38Packages.isort
@@ -58,6 +60,7 @@ in pkgs // {
       wordnet
       xsv
       youtube-dl
+      zsh
     ];
   };
 }
