@@ -72,6 +72,8 @@ alias vi="nvim -O"
 alias tux="tmux new -A -s tux"
 # show bytes in a file
 alias bytes="od -tc -An $argv"
+# recompile qmk keyboard firmware - https://github.com/caspark/qmk_firmware/tree/master/keyboards/kinesis/keymaps/caspark
+alias qmkc="qmk compile --keyboard kinesis/stapelberg --keymap caspark && cp ~/src/qmk_firmware/kinesis_stapelberg_caspark.hex /mnt/c/temp/"
 alias gpu="git push -u origin HEAD"
 alias gpuf="git push -u --force-with-lease origin HEAD"
 
