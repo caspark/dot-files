@@ -1,5 +1,6 @@
 # vim:foldmethod=marker foldlevel=1
 
+export TERM=xterm-24bit
 export COLORTERM=truecolor
 
 # set up nix (do this early so that nix-installed programs are available)
@@ -45,11 +46,11 @@ antigen bundle zsh-users/zsh-completions
 # https://github.com/zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-autosuggestions
 
-# https://github.com/zdharma/fast-syntax-highlighting
-antigen bundle zdharma/fast-syntax-highlighting
-
 # https://github.com/zsh-users/zsh-history-substring-search
 antigen bundle zsh-users/zsh-history-substring-search
+
+# https://github.com/zdharma/fast-syntax-highlighting
+antigen bundle zdharma/fast-syntax-highlighting
 
 antigen apply
 # }}} end plugins
