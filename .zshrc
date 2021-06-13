@@ -206,5 +206,12 @@ function connect_to_or_start_ssh_agent {
 connect_to_or_start_ssh_agent
 # set +x
 
+# set up PATH - for path vs PATH, see https://superuser.com/a/1447959
+typeset -U path # prevent duplicates
+path=("$HOME/.local/bin"
+      "$HOME/dotmore/bin"
+      $path)
+export PATH
+
 # set up the prompt using https://starship.rs/ (starship is installed via nix)
 eval "$(starship init zsh)"
