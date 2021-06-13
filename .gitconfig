@@ -1,10 +1,10 @@
 [user]
-	name = Caspar Krieger
-	email = git@asparck.com
+    name = Caspar Krieger
+    email = git@asparck.com
 [color]
-	branch = auto
-	diff = auto
-	status = auto
+    branch = auto
+    diff = auto
+    status = auto
 [pager]
     diff = delta
     log = delta
@@ -33,13 +33,13 @@
     puf = push -u origin HEAD --force-with-lease
     msg = log --no-merges --reverse master..HEAD --format=%B
 [push]
-	default = upstream
+    default = upstream
 [core]
-	excludesfile = /home/caspar/.gitignore_global
+    excludesfile = /home/caspar/.gitignore_global
 [pull]
-	rebase = true
+    rebase = true
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
