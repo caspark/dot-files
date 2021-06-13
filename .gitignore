@@ -15,6 +15,7 @@
 !/.config/nixpkgs/**
 !/.config/nvim/
 !/.config/nvim/**
+!/.config/starship.toml
 !/.doom.d/
 !/.doom.d/**
 !/.tmux/
