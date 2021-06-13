@@ -121,7 +121,88 @@ function ghome {
     mv $HOME/.git-old $HOME/.git
   fi
 }
+
+function connect_to_or_start_ssh_agent {
+  if [[ -v SSH_TTY ]]; then
+    ssh-add -L >/dev/null 2>&1
+    local CONTACT_STATUS="$?"
+    if [[ "$CONTACT_STATUS" -eq 0 ]]; then
+      # echo "DEBUG: Detected SSH connection; reusing forwarded SSH agent"
+    else
+      # echo "DEBUG: Detected SSH connection but failed to contact SSH agent! Return code was $contact_status"
+    fi
+    return
+  fi
+
+  local SSH_AGENT_PIDS="$(pgrep -u $USER ssh-agent | tr '\n' ' ')"
+  local SSH_AGENT_PIDS_COUNT="$(echo -n "$SSH_AGENT_PIDS" | wc -w)"
+  # echo "DEBUG: SSH agents PIDs found are $SSH_AGENT_PIDS; total PID count is $SSH_AGENT_PIDS_COUNT"
+
+  if [[ "$SSH_AGENT_PIDS_COUNT" -eq 0 ]]; then
+    # the simple case: there's no SSH agent running, so start one
+    # first nuke pre-existing ssh sockets, otherwise subsequent shells won't know which
+    # ssh agent socket to connect to
+    rm -rf /tmp/ssh-*
+    # then start our own SSH agent
+    eval $(ssh-agent 2> /dev/null)
+    # echo "DEBUG: Started new ssh-agent (no previous agent running): $(env | grep SSH | tr '\n' ' ')"
+  elif [[ "$SSH_AGENT_PIDS_COUNT" -gt 1 ]]; then
+    # More than one SSH agent is running (probably the OS started one or more of its own)
+    # we have no way of knowing which one is the best one to connect to, so let's kill
+    # all of them and start a new one
+    # echo "DEBUG: Multiple SSH agents found so killing them all"
+
+    # NB: the ${(z)foobar} syntax causes foobar's value to be split by words, so we can loop over each word.
+    #     See https://zsh.sourceforge.io/Doc/Release/Expansion.html#Parameter-Expansion-Flags
+    for PID in ${(z)SSH_AGENT_PIDS}; do
+      # echo "DEBUG: Killing $PID"
+      kill -9 $PID
+    done
+    # we also need to nuke pre-existing ssh sockets, otherwise subsequent shells won't know which
+    # ssh agent socket to connect to
+    rm -rf /tmp/ssh-*
+    # now we're ready to start a new agent and use that
+    eval "$(ssh-agent 2> /dev/null)"
+    # echo "DEBUG: Started new ssh-agent after killing multiple old agents: $(env | grep SSH | tr '\n' ' ')"
+  else
+    # we have exactly 1 SSH agent already running so let's try to connect to it
+    local CANDIDATE_SSH_AGENT_PID="$(pgrep -u $USER ssh-agent)"
+    # Usually the socket is created by the parent process, which has a PID one less than ssh-agent
+    local CANDIDATE_SSH_AGENT_PPID="$[$CANDIDATE_SSH_AGENT_PID - 1]"
+    local CANDIDATE_SSH_AUTH_SOCK="$(find /tmp -user $USER -type s -name agent.$CANDIDATE_SSH_AGENT_PPID 2> /dev/null)"
+
+    if [[ -z "$CANDIDATE_SSH_AUTH_SOCK" || ! -S "$CANDIDATE_SSH_AUTH_SOCK" ]]; then
+      # echo "DEBUG: Failed to find auth socket from PID $CANDIDATE_SSH_AGENT_PID (PPID $CANDIDATE_SSH_AGENT_PPID)"
+      # Didn't find a socket with expected name, so fall back to less rigorous search for socket
+      # TODO: this could find more than 1 socket; we should fail hard here if that happens
+      local CANDIDATE_SSH_AUTH_SOCK="$(find /tmp -user $USER -type s -name 'agent.*' 2> /dev/null)"
+    fi
+
+    # If we found a socket, set the environment variables
+    if [[ -n "$CANDIDATE_SSH_AUTH_SOCK" && -S "$CANDIDATE_SSH_AUTH_SOCK" ]]; then
+      export SSH_AGENT_PID="$CANDIDATE_SSH_AGENT_PID"
+      export SSH_AUTH_SOCK="$CANDIDATE_SSH_AUTH_SOCK"
+      # Try to contact ssh-agent
+      ssh-add -L >/dev/null 2>&1
+
+      # return code 2 means specifically we can't contact the ssh-agent
+      if [[ "$?" -eq 2 ]]; then
+        echo "ERROR: Failed to contact SSH agent (PID=$CANDIDATE_SSH_AGENT_PID, socket=$CANDIDATE_SSH_AUTH_SOCK)"
+        unset SSH_AGENT_PID
+        unset SSH_AUTH_SOCK
+      else
+        # echo "DEBUG: Reusing existing ssh-agent (PID=$CANDIDATE_SSH_AGENT_PID, socket=$CANDIDATE_SSH_AUTH_SOCK)"
+      fi
+    else
+      echo "ERROR: Failed to find existing ssh-agent socket (PID=$CANDIDATE_SSH_AGENT_PID, parent PID=$CANDIDATE_SSH_AGENT_PPID)"
+    fi
+  fi
+}
 # }}} end functions
+
+# set -x
+connect_to_or_start_ssh_agent
+# set +x
 
 # set up the prompt using https://starship.rs/ (starship is installed via nix)
 eval "$(starship init zsh)"
