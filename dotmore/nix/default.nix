@@ -41,6 +41,7 @@ in pkgs // {
       niv
       nixfmt
       pandoc
+      pkgs-unstable.delta
       pkgs-unstable.fzf
       pkgs-unstable.starship
       proselint
