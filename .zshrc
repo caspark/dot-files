@@ -64,8 +64,16 @@ bindkey -M emacs '^N' history-substring-search-down
 export EDITOR=nvim
 
 # aliases that don't have a better home
-alias vim="nvim"
-alias vi="nvim"
+alias e="$EDITOR"
+alias v="$VISUAL"
+alias vim="nvim -O"
+alias vi="nvim -O"
+# attach to existing tmux session or create new tmux session if necessary
+alias tux="tmux new -A -s tux"
+# show bytes in a file
+alias bytes="od -tc -An $argv"
+alias gpu="git push -u origin HEAD"
+alias gpuf="git push -u --force-with-lease origin HEAD"
 
 # {{{ fzf and fzf plugin config
 source ~/.nix-profile/share/fzf/key-bindings.zsh
@@ -100,6 +108,20 @@ _fzf_compgen_dir() {
 
 export SDKMAN_DIR="/home/caspar/.sdkman"
 [[ -s "/home/caspar/.sdkman/bin/sdkman-init.sh" ]] && source "/home/caspar/.sdkman/bin/sdkman-init.sh"
+
+# {{{ functions
+function ghome {
+  if [[ -d "$HOME/.git" ]]; then
+    echo "Disabling home repo and returning to previous work dir"
+    mv $HOME/.git $HOME/.git-old
+    popd
+  else
+    echo "Enabling home repo and jumping to ~/dotmore/"
+    pushd $HOME/dotmore
+    mv $HOME/.git-old $HOME/.git
+  fi
+}
+# }}} end functions
 
 # set up the prompt using https://starship.rs/ (starship is installed via nix)
 eval "$(starship init zsh)"
