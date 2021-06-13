@@ -22,9 +22,22 @@ export NVM_LAZY_LOAD=true
 antigen bundle lukechilds/zsh-nvm
 
 # https://github.com/wfxr/forgit
-# fzf isn't loaded till later, but specify the defaults here so they're picked up by forgit
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 antigen bundle wfxr/forgit
+# {{{ forgit's FZF commands quick reference:
+# * git log -> glo
+# * git diff -> gd
+# * git reset file -> grh
+# * git checkout file -> gcf
+# * git checkout branch -> gcb
+# * git checkout commit -> gco
+# * stash viewer -> gss
+# * clean picker -> gclean
+# * rebase -i picker -> grb
+# keybinds:
+#   * ctrl + Y -> copy commit hash
+#   * alt + j/k (p/n) -> move down/up in preview window
+#   * ? -> toggle preview window
+# }}}
 
 # https://github.com/zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-completions
@@ -55,7 +68,6 @@ alias vim="nvim"
 alias vi="nvim"
 
 # {{{ fzf and fzf plugin config
-
 source ~/.nix-profile/share/fzf/key-bindings.zsh
 source ~/.nix-profile/share/fzf/completion.zsh
 # use fd (installed via nix) to generate options
