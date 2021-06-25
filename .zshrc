@@ -201,10 +201,28 @@ function connect_to_or_start_ssh_agent {
     fi
   fi
 }
+
+function adjust_for_wsl {
+  # if we're on WSL, then...
+  if [[ -f "$(which wsl.exe 2> /dev/null)" ]]; then
+    # echo "DEBUG: wsl detected"
+    if [[ -d /run/WSL/ ]]; then
+      # echo "DEBUG: wsl version detected as 2"
+      # we need to set our X server DISPLAY variable to the windows host box
+      export DISPLAY="$(route -n | grep -m1 '^0.0.0.0' | awk '{ print $2; }'):0.0"
+    else # we're on WSL 1
+      # echo "DEBUG: wsl version detected as 1"
+      # we need to get Docker to talk to the docker-daemon over TCP using TLS
+      export DOCKER_HOST="tcp://loopback-docker-bridge.test:2376"
+      export DOCKER_TLS_VERIFY="1"
+    fi
+  fi
+}
 # }}} end functions
 
 # set -x
 connect_to_or_start_ssh_agent
+adjust_for_wsl
 # set +x
 
 # set up PATH - for path vs PATH, see https://superuser.com/a/1447959
