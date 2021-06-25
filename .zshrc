@@ -109,8 +109,8 @@ _fzf_compgen_dir() {
 # }}}
 # }}}
 
-export SDKMAN_DIR="/home/caspar/.sdkman"
-[[ -s "/home/caspar/.sdkman/bin/sdkman-init.sh" ]] && source "/home/caspar/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # {{{ functions
 function ghome {
