@@ -218,6 +218,12 @@ function adjust_for_wsl {
     fi
   fi
 }
+
+function bd {
+  # bd = background disown
+  $@ &> /dev/null &
+  disown
+}
 # }}} end functions
 
 # set -x
