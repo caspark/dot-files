@@ -222,6 +222,15 @@ function adjust_for_wsl {
 function configure_sourcegraph {
   if [[ -f "$HOME/.config/sourcegraph" ]]; then
     source "$HOME/.config/sourcegraph"
+    alias sourgs="sourg search"
+    function sourgg {
+      # sourgg = sourcegraph grep
+      sourg search -json "$1 type:file" | jq '.Results[] | { file: .file.url, context: .lineMatches[] | .preview } | .file + ": " + (.context|gsub("^ +"; ""))'
+    }
+    function sourgc {
+      # sourgc = sourcegraph color grep
+      sourgg "$1" | rg --color=always "$1"
+    }
   fi
 }
 
