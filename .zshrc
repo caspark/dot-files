@@ -225,6 +225,13 @@ function configure_sourcegraph {
   fi
 }
 
+# functions intended to be used interactively
+
+function sd {
+  # sd = (switch to a) source directory
+  cd "$HOME/src/$(ls -1 ~/src/ | fzf)"
+}
+
 function bd {
   # bd = background disown
   $@ &> /dev/null &
