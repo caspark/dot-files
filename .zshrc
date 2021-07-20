@@ -219,6 +219,12 @@ function adjust_for_wsl {
   fi
 }
 
+function configure_sourcegraph {
+  if [[ -f "$HOME/.config/sourcegraph" ]]; then
+    source "$HOME/.config/sourcegraph"
+  fi
+}
+
 function bd {
   # bd = background disown
   $@ &> /dev/null &
@@ -229,6 +235,7 @@ function bd {
 # set -x
 connect_to_or_start_ssh_agent
 adjust_for_wsl
+configure_sourcegraph
 # set +x
 
 # set up PATH - for path vs PATH, see https://superuser.com/a/1447959
