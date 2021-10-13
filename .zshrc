@@ -258,6 +258,7 @@ configure_sourcegraph
 # set up PATH - for path vs PATH, see https://superuser.com/a/1447959
 typeset -U path # prevent duplicates
 path=("$HOME/.local/bin"
+      "$HOME/.cargo/bin"
       "$HOME/dotmore/bin"
       $path)
 export PATH
