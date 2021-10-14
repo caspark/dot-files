@@ -28,6 +28,8 @@
 # and include some files too
 !/.asdfrc
 !/.bashrc
+!/.cargo
+!/.cargo/config.toml
 !/.inputrc
 !/.sdkman
 !/.sdkman/etc
