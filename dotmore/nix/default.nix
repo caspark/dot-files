@@ -10,6 +10,7 @@ in pkgs // {
   ckrieger-devtools = pkgs.buildEnv {
     name = "ckrieger-devtools";
     paths = with pkgs; [
+      act
       antigen
       aspell
       aspellDicts.en
