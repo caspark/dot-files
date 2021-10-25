@@ -205,6 +205,8 @@ fi
 
 [ -f ~/qmk_utils/activate_wsl.sh ] && source ~/qmk_utils/activate_wsl.sh
 
+. "$HOME/.cargo/env"
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/caspar/.sdkman"
 [[ -s "/home/caspar/.sdkman/bin/sdkman-init.sh" ]] && source "/home/caspar/.sdkman/bin/sdkman-init.sh"
