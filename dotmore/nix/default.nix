@@ -53,7 +53,6 @@ in pkgs // {
       ripgrep
       rlwrap
       ruby
-      rustup
       shellcheck
       sshpass
       subversion
