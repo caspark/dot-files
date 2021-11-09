@@ -38,13 +38,13 @@ in pkgs // {
       lua
       mercurialFull
       mosh
-      neovim
       niv
       nixfmt
       pandoc
       pkgs-unstable.bat
       pkgs-unstable.delta
       pkgs-unstable.fzf
+      pkgs-unstable.neovim
       pkgs-unstable.starship
       proselint
       python38Full
