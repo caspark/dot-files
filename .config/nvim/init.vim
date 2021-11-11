@@ -89,10 +89,6 @@ Plug 'ConradIrwin/vim-bracketed-paste' " detect pastes in terminal via magic key
 " bracketed paste is unfortunately not supported in microsoft terminal yet:
 " https://github.com/microsoft/terminal/issues/395
 
-Plug 'psliwka/vim-smoothie' " inertia-based inertia-based scrolling for ctrl-d/u
-let g:smoothie_break_on_reverse = 1
-let g:smoothie_base_speed = 25
-
 Plug 'lfilho/cosco.vim' " shortcut to add semicolons intelligently
 
 Plug 'AndrewRadev/splitjoin.vim' " split and join lines with gS/gJ
