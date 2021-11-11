@@ -205,10 +205,13 @@ set updatetime=100
 set cmdheight=2
 
 if !exists('g:vscode')
-    " always show the sign column (so that it doesn't jump in and out of view)
-    " TODO signcolumn=number would be nice to have:
-    " https://github.com/neovim/neovim/pull/12621
-    set signcolumn=yes
+    " We want to show the sign colum consistently so that it doesn't jump in
+    " and out of view. Options:
+    " number = show the sign column such that it overwrites the line number
+    " column when there's something to display in the sign colum (e.g. git diff
+    " marker from git gutter)
+    " yes = always show the sign column
+    set signcolumn=number
 
     " 20% fake transparency on floating window
     set pumblend=20
