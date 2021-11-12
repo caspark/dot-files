@@ -235,6 +235,12 @@ function configure_sourcegraph {
   fi
 }
 
+function configure_asdf {
+  if [[ -f "$HOME/.asdf/asdf.sh" ]]; then
+    . $HOME/.asdf/asdf.sh
+  fi
+}
+
 # functions intended to be used interactively
 
 function sd {
@@ -253,6 +259,7 @@ function bd {
 connect_to_or_start_ssh_agent
 adjust_for_wsl
 configure_sourcegraph
+configure_asdf
 # set +x
 
 # set up PATH - for path vs PATH, see https://superuser.com/a/1447959
