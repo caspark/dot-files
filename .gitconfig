@@ -29,6 +29,7 @@
     cv = commit -v
     cva = commit -v --amend
     r = reset
+    s = status
     pu = push -u origin HEAD
     puf = push -u origin HEAD --force-with-lease
     msg = log --no-merges --reverse master..HEAD --format=%B
