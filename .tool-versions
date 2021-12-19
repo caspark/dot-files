@@ -1,4 +1,6 @@
+elixir 1.13.1-otp-24
+erlang 24.2
+golang 1.17.5
 nodejs 12.16.2
-ruby 2.6.5
 python 3.9.0
-
+ruby 2.6.5
