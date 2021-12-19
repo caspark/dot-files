@@ -91,3 +91,39 @@ and inside each directory is a script `sync.sh` which applies the configuration.
 
 * To sync all Windows configurations, run `windows-settings-sync.sh`
 
+### ASDF and other "version managers"
+
+While I manage a lot of dev tools using nix (see above), I prefer to manage
+versions of (most) SDKs and programming language tools using
+[asdf](https://github.com/asdf-vm/asdf) - I've found this reduces the amount of
+time I spend chasing down obscure issues caused by nix's hacks to e.g. make
+LLVM builds 100% reproducible.
+
+ASDF global config is managed via `~/.toolversions` and `~/.asdfrc`. Command
+cheat sheet:
+
+* `asdf list` - list installed versions for all plugins
+* `asdf list python` - list installed versions for a plugin
+* `asdf shell python 3.10.0` - use specific version for this shell session
+* `asdf local python 3.10.0` - use specific version for all shells in this pwd
+* `asdf list all python` - list all known versions that could be installed
+* `asdf install python 3.10.0` - install a specific version
+
+Plugins to support each language need to be installed one by one, and typically
+have their own prereqs that need to be installed via e.g. `apt`, so here's a
+list of common plugins I use:
+
+* https://github.com/danhper/asdf-python
+* https://github.com/asdf-vm/asdf-nodejs
+* https://github.com/asdf-vm/asdf-ruby
+* https://github.com/asdf-vm/asdf-elixir
+    * NB: needs https://github.com/asdf-vm/asdf-erlang
+* https://github.com/kennyp/asdf-golang
+
+Sometimes specific projects have problems with the way that ASDF does things
+(or rather, specific codebases assume behavior only present in lang-specific
+toolsets), so here are common per-language alternatives:
+
+* https://sdkman.io/ - java, scala, gradle, maven, etc
+* https://github.com/nvm-sh/nvm
+* https://rvm.io/ and https://github.com/rbenv/rbenv for ruby
