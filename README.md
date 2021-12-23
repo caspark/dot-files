@@ -119,6 +119,7 @@ list of common plugins I use:
 * https://github.com/asdf-vm/asdf-elixir
     * NB: needs https://github.com/asdf-vm/asdf-erlang
 * https://github.com/kennyp/asdf-golang
+* https://github.com/twuni/asdf-yarn
 
 Sometimes specific projects have problems with the way that ASDF does things
 (or rather, specific codebases assume behavior only present in lang-specific
@@ -127,3 +128,9 @@ toolsets), so here are common per-language alternatives:
 * https://sdkman.io/ - java, scala, gradle, maven, etc
 * https://github.com/nvm-sh/nvm
 * https://rvm.io/ and https://github.com/rbenv/rbenv for ruby
+
+#### Yarn and global installs
+
+`yarn config set prefix ~/.yarn` and ~/.yarn/bin is already added to path, so
+then [globally installed packages via
+Yarn](https://github.com/asdf-vm/asdf-nodejs/issues/42) should work.
