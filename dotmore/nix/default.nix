@@ -54,6 +54,7 @@ in pkgs // {
       rlwrap
       ruby
       shellcheck
+      shfmt
       sshpass
       subversion
       tig
