@@ -42,6 +42,7 @@ in pkgs // {
       nixfmt
       pandoc
       pkgs-unstable.bat
+      pkgs-unstable.broot
       pkgs-unstable.delta
       pkgs-unstable.fzf
       pkgs-unstable.neovim

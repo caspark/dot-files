@@ -9,6 +9,8 @@
 !/.asdf
 !/.asdf/**
 !/.config/
+!/.config/broot/
+!/.config/broot/**
 !/.config/fish/
 !/.config/fish/**
 !/.config/nixpkgs/

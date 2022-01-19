@@ -274,3 +274,5 @@ export PATH
 
 # set up the prompt using https://starship.rs/ (starship is installed via nix)
 eval "$(starship init zsh)"
+
+source /home/caspar/.config/broot/launcher/bash/br
