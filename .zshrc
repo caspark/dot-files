@@ -211,6 +211,10 @@ function adjust_for_wsl {
       # echo "DEBUG: wsl version detected as 2"
       # we need to set our X server DISPLAY variable to the windows host box
       export DISPLAY="$(route -n | grep -m1 '^0.0.0.0' | awk '{ print $2; }'):0.0"
+
+      # set the wslu's wslview app as browser to host use system browser
+      # https://superuser.com/a/1368878
+      export BROWSER="wslview"
     else # we're on WSL 1
       # echo "DEBUG: wsl version detected as 1"
       # we need to get Docker to talk to the docker-daemon over TCP using TLS
