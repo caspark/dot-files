@@ -271,6 +271,7 @@ typeset -U path # prevent duplicates
 path=("$HOME/.local/bin"
       "$HOME/dotmore/bin"
       "$HOME/.yarn/bin"
+      "$HOME/.fly/bin/"
       $path)
 export PATH
 
