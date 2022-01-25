@@ -208,7 +208,7 @@ fi
 . "$HOME/.cargo/env"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/caspar/.sdkman"
-[[ -s "/home/caspar/.sdkman/bin/sdkman-init.sh" ]] && source "/home/caspar/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/caspar/.sdkman/bin/sdkman-init.sh"
 
-source /home/caspar/.config/broot/launcher/bash/br
+source "$HOME/.config/broot/launcher/bash/br"
