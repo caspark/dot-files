@@ -47,6 +47,7 @@ in pkgs // {
       pkgs-unstable.fzf
       pkgs-unstable.neovim
       pkgs-unstable.starship
+      pkgs-unstable.topgrade
       proselint
       python38Full
       python38Packages.isort
