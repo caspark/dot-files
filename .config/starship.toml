@@ -3,6 +3,8 @@ $time\
 $username\
 $hostname\
 $shlvl\
+$python\
+$nodejs\
 $directory\
 $git_branch\
 $git_commit\
@@ -29,3 +31,14 @@ format = "[$symbol$branch]($style) "
 [status]
 disabled = false
 
+[python]
+# customize the python promt so that it's compact (only shows the venv)
+symbol = "🐍"
+format = '[${symbol}($virtualenv) ]($style)'
+# make it so that we only show the prompt if a virtualenv is active
+detect_files = []
+detect_extensions = []
+
+[nodejs]
+symbol = "🤖"
+format = "[$symbol($version )]($style)"
