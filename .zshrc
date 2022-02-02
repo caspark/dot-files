@@ -203,10 +203,27 @@ function connect_to_or_start_ssh_agent {
   fi
 }
 
+function define_dopus_shortcut {
+    # Directory Opus only exists on Windows so this function should only be called in WSL.
+
+    function dopus {
+        # opens the current directory or the first arg in Directory Opus
+        DOPUS_PATH="$(wslpath -a "C:\Program Files\GPSoftware\Directory Opus\dopus.exe")"
+        echo $DOPUS_PATH
+        if [ $# -gt 0 ]; then
+            DOPUS_TARGET="$1"
+        else
+            DOPUS_TARGET="$(pwd)"
+        fi
+        $DOPUS_PATH "$(wslpath -w "$DOPUS_TARGET")"
+    }
+}
+
 function adjust_for_wsl {
   # if we're on WSL, then...
   if [[ -f "$(which wsl.exe 2> /dev/null)" ]]; then
     # echo "DEBUG: wsl detected"
+    define_dopus_shortcut
     if [[ -d /run/WSL/ ]]; then
       # echo "DEBUG: wsl version detected as 2"
       # we need to set our X server DISPLAY variable to the windows host box
