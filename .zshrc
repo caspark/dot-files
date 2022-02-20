@@ -298,3 +298,6 @@ export PATH
 eval "$(starship init zsh)"
 
 source "$HOME/.config/broot/launcher/bash/br"
+
+SUDO_EDITOR="$(which $EDITOR)"
+export SUDO_EDITOR
