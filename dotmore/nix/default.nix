@@ -46,6 +46,7 @@ in pkgs // {
       pkgs-unstable.delta
       pkgs-unstable.fzf
       pkgs-unstable.git-filter-repo
+      pkgs-unstable.git-lfs
       pkgs-unstable.neovim
       pkgs-unstable.starship
       pkgs-unstable.topgrade
