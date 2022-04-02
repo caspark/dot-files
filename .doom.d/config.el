@@ -38,9 +38,19 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
+;; stop github markdown from prompting for language when inserting a code
+(setq markdown-gfm-use-electric-backquote nil)
+
+; a bunch of settings
+(setq
+ projectile-project-search-path '("~/src/" "/mnt/c/src/")
+ evil-goggles-duration 0.25
+ server-use-tcp t
+ server-auth-dir "/tmp/emacs-server-auth-dir-ckrieger")
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(setq org-directory "/mnt/c/Users/Admin/Documents/official/notes/org")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
