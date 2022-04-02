@@ -2,6 +2,7 @@ let
   sources = import ./sources.nix;
   pkgs = import sources.nixpkgs {
     overlays = [
+      # adds emacsUnstable and emacsGcc packages
       (import sources.emacs-overlay)
     ];
   };
@@ -23,7 +24,7 @@ in pkgs // {
       direnv
       dos2unix
       dtrx
-      emacsUnstable
+      emacsGcc
       entr
       fd
       firefox
