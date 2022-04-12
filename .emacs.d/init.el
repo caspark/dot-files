@@ -141,3 +141,7 @@
 
 (use-package which-key)
 (which-key-mode)
+
+(use-package org)
+
+(use-package magit)
