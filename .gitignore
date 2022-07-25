@@ -33,6 +33,10 @@
 !/.cargo
 !/.cargo/config.toml
 !/.inputrc
+!/.local
+!/.local/share
+!/.local/share/applications
+!/.local/share/applications/nvim.desktop
 !/.sdkman
 !/.sdkman/etc
 !/.sdkman/etc/config

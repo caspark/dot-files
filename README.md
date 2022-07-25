@@ -57,6 +57,9 @@ to quit and save etc, and I tend to use standard Emacs edit mode bindings like
   the errors on startup, and hit `space, v, p, i` (mnemonic "Vim Plugin
   Install") to install plugins via
   [vim-plug](https://github.com/junegunn/vim-plug).
+* To update xdg-open to do the right thing (i.e.use nvim instead of vim), run
+  `xdg-mime default nvim.desktop text/plain` (see config file in
+  ~./local/share/applications).
 
 Note that this config specifically only works with Neovim, not (e.g.) Vim 8, which is why the config is at `/.config/nvim/init.vim` rather than `/.vimrc`.
 
