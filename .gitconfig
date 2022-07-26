@@ -15,7 +15,7 @@
 [delta]
     # features = side-by-side line-numbers decorations
     features = line-numbers
-    syntax-theme = Solarized Dark
+    syntax-theme = Solarized (dark)
     commit-decoration-style = bold yellow box ul
     file-decoration-style = yellow ol
     file-style = bold yellow ul
