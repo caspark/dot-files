@@ -44,6 +44,7 @@ in pkgs // {
       pandoc
       pkgs-unstable.bat
       pkgs-unstable.broot
+      pkgs-unstable.exa
       pkgs-unstable.delta
       pkgs-unstable.fzf
       pkgs-unstable.git-filter-repo

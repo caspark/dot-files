@@ -274,6 +274,18 @@ function bd {
   $@ &> /dev/null &
   disown
 }
+
+unalias l
+function l {
+  if [ -d "$1" ] && [ $# -eq 1 ]; then
+    exa -la --octal-permissions --git --icons "$1"
+  elif [ $# -gt "0" ]; then
+    bat "$@"
+  else
+    l .
+  fi
+}
+
 # }}} end functions
 
 # set -x
