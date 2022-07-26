@@ -72,8 +72,12 @@ Plug 'tpope/vim-sleuth' " auto pick tab and shift widths
 Plug 'tpope/vim-repeat' " make plugin commands repeatable with .
 Plug 'tpope/vim-speeddating' " date and time incrementing
 Plug 'tpope/vim-unimpaired' " misc 'backwards and forwards' commands
-Plug 'tpope/vim-eunuch' " unix commands
-Plug 'tpope/vim-endwise' " auto insert closing keywords (e.g. 'fi')
+
+"As of 2022-07-26, tpope or neovim seems to have broken these plugins: they
+"make vim commands appear as output when hitting Enter in insert mode while
+"editing a .zshrc file
+"Plug 'tpope/vim-eunuch' " unix commands
+"Plug 'tpope/vim-endwise' " auto insert closing keywords (e.g. 'fi')
 
 Plug 'machakann/vim-sandwich' " surround commands but better
 
