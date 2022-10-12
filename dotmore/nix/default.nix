@@ -52,6 +52,7 @@ in pkgs // {
       pkgs-unstable.neovim
       pkgs-unstable.starship
       pkgs-unstable.topgrade
+      pkgs-unstable.tokei
       proselint
       python38Full
       python38Packages.isort
