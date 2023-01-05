@@ -7,6 +7,8 @@ export COLORTERM=truecolor
 source ~/.nix-profile/etc/profile.d/nix.sh
 
 # {{{ Antigen config - load whatever plugins
+# uncomment below line to enable logging - useful if a plugin install fails
+#ANTIGEN_LOG=/tmp/zsh-antigen.log
 source ~/.nix-profile/share/antigen/antigen.zsh
 
 antigen use oh-my-zsh
@@ -50,7 +52,7 @@ antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-history-substring-search
 
 # https://github.com/zdharma/fast-syntax-highlighting
-antigen bundle zdharma/fast-syntax-highlighting
+antigen bundle zdharma/fast-syntax-highlighting --branch=main
 
 antigen apply
 # }}} end plugins
@@ -304,12 +306,16 @@ path=("$HOME/.local/bin"
       $path)
 export PATH
 
-. "$HOME/.cargo/env"
+if [ -f "$HOME/.cargo/env" ]; then
+  . "$HOME/.cargo/env"
+fi
 
 # set up the prompt using https://starship.rs/ (starship is installed via nix)
 eval "$(starship init zsh)"
 
-source "$HOME/.config/broot/launcher/bash/br"
+if [ -f "$HOME/.config/broot/launcher/bash/br" ]; then
+  source "$HOME/.config/broot/launcher/bash/br"
+fi
 
 SUDO_EDITOR="$(which $EDITOR)"
 export SUDO_EDITOR
