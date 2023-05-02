@@ -53,6 +53,7 @@ in pkgs // {
       pkgs-unstable.starship
       pkgs-unstable.topgrade
       pkgs-unstable.tokei
+      pkgs-unstable.tealdeer
       proselint
       python38Full
       python38Packages.isort
