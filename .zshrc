@@ -1,7 +1,7 @@
 # vim:foldmethod=marker foldlevel=1
 
-export TERM=xterm-24bit
-export COLORTERM=truecolor
+#export TERM=xterm-24bit
+#export COLORTERM=truecolor
 
 # set up nix (do this early so that nix-installed programs are available)
 source ~/.nix-profile/etc/profile.d/nix.sh
