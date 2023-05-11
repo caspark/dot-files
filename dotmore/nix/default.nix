@@ -71,7 +71,6 @@ in pkgs // {
       wordnet
       xsv
       youtube-dl
-      zsh
     ];
   };
 }
