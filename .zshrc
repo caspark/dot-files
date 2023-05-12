@@ -4,7 +4,8 @@
 #export COLORTERM=truecolor
 
 # set up nix (do this early so that nix-installed programs are available)
-source ~/.nix-profile/etc/profile.d/nix.sh
+# NB: doesn't seem to be necessary on multiuser nix installs
+[ -f ~/.nix-profile/etc/profile.d/nix.sh ] && source ~/.nix-profile/etc/profile.d/nix.sh
 
 # {{{ Antigen config - load whatever plugins
 # uncomment below line to enable logging - useful if a plugin install fails
