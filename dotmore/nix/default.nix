@@ -27,7 +27,6 @@ in pkgs // {
       emacsGcc
       entr
       fd
-      firefox
       fish
       git
       gitAndTools.git-extras
