@@ -69,7 +69,7 @@ in pkgs // {
       vmtouch
       wordnet
       xsv
-      youtube-dl
+      pkgs-unstable.youtube-dl
     ];
   };
 }

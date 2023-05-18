@@ -43,7 +43,7 @@ Note that there is also an unstable set of packages which can be updated like:
 
 ``` shell
 cd "$HOME/dotmore/"
-niv update nixpkgs -b nixpkgs-unstable
+niv update nixpkgs-unstable -b nixpkgs-unstable
 # (then install packages again)
 ```
 
