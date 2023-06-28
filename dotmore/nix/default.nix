@@ -54,8 +54,6 @@ in pkgs // {
       pkgs-unstable.tokei
       pkgs-unstable.tealdeer
       proselint
-      python38Full
-      python38Packages.isort
       qpdf
       ripgrep
       rlwrap
@@ -69,7 +67,6 @@ in pkgs // {
       vmtouch
       wordnet
       xsv
-      pkgs-unstable.youtube-dl
     ];
   };
 }
