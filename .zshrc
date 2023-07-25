@@ -272,6 +272,11 @@ function sd {
   cd "$HOME/src/$(ls -1 ~/src/ | fzf)"
 }
 
+function sb {
+  # sb = (switch to a) source directory
+  cd "$HOME/srb/$(ls -1 ~/srb/ | fzf)"
+}
+
 function bd {
   # bd = background disown
   $@ &> /dev/null &
