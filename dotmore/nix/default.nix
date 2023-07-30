@@ -18,7 +18,6 @@ in pkgs // {
       aspellDicts.en-computers
       aspellDicts.en-science
       cloc
-      cmake
       colordiff
       cvs
       direnv
