@@ -283,6 +283,10 @@ function bd {
   disown
 }
 
+function ep {
+  dtrx "$@"
+}
+
 unalias l
 function l {
   if [ -d "$1" ] && [ $# -eq 1 ]; then
