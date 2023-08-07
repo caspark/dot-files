@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eux
+set -euxo pipefail
 
 function get_url_title {
     # thanks https://unix.stackexchange.com/questions/103252/how-do-i-get-a-websites-title-using-command-line
@@ -65,7 +65,7 @@ else
     if [[ -n "$FIRST_URL" ]]; then
         TEMP_FILENAME=$(gen_name 'reading-link' 'txt')
         mv "$OG_FILENAME" "$TEMP_FILENAME"
-        TITLE="$(get_url_title "$FIRST_URL" || "link")"
+        TITLE="$(get_url_title "$FIRST_URL" || echo "link")"
         TITLE="${TITLE//[^a-zA-Z -]/}"
         mv "$TEMP_FILENAME" "$(gen_name "$TITLE" 'txt')"
     fi
