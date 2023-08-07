@@ -8,27 +8,66 @@ function get_url_title {
 }
 
 function gen_name {
-    local title
-    title="$1"
-    echo "$DEST_DIR/$PREFIX - $title.txt"
+    local title="$1"
+    local ext="$2"
+    echo "$(find_available_filename "$PREFIX - $title.$ext")"
 }
 
-readonly TO_PASTE="$(xclip -sel clip -o)"
+function find_available_filename {
+    local candidate_name="$1"
+
+    if [ ! -f "$candidate_name" ]; then
+        echo "$candidate_name"
+        return
+    fi
+
+    local counter=2
+
+    local filename
+    while true; do
+        filename="${candidate_name%.*}${counter}.${candidate_name##*.}"
+        if [ ! -f "$filename" ]; then
+            break
+        fi
+        counter=$((counter + 1))
+    done
+
+    echo "$filename"
+}
+
+function get_first_url {
+    local url=$(echo "$1" | sed -n 's/.*\(https\{0,1\}:\/\/[^ ]*\).*/\1/p')
+    echo "$url"
+}
+
 readonly PREFIX="$(date +%F)"
 
 if [[ $# -gt 0 ]]; then
-    readonly DEST_DIR="$1"
+    cd "$1"
+fi
+
+# Check if image/png or image/gif is available in clipboard targets
+if xclip -selection clipboard -t TARGETS -o | grep -q -e "image/png" -e "image/gif"; then
+    # Save clipboard contents to file based on format
+    if xclip -selection clipboard -t image/png -o > "$(gen_name 'img' 'png')"; then
+        echo "Image saved as png"
+    elif xclip -selection clipboard -t image/gif -o > $(gen_name 'img' 'gif'); then
+        echo "Image saved as gif"
+    else
+        echo "Error saving image"
+    fi
 else
-    readonly DEST_DIR="$(pwd)"
+    OG_FILENAME=$(gen_name 'clip' 'txt')
+    readonly TO_PASTE="$(xclip -sel clip -o)"
+    echo "$TO_PASTE" >> "$OG_FILENAME"
+
+    readonly FIRST_URL="$(get_first_url "$TO_PASTE")"
+    if [[ -n "$FIRST_URL" ]]; then
+        TEMP_FILENAME=$(gen_name 'reading-link' 'txt')
+        mv "$OG_FILENAME" "$TEMP_FILENAME"
+        TITLE="$(get_url_title "$FIRST_URL" || "link")"
+        TITLE="${TITLE//[^a-zA-Z -]/}"
+        mv "$TEMP_FILENAME" "$(gen_name "$TITLE" 'txt')"
+    fi
 fi
 
-OG_FILENAME=$(gen_name '')
-echo "$TO_PASTE" >> "$OG_FILENAME"
-
-if [[ $TO_PASTE =~ ^https?:// ]]; then
-    TEMP_FILENAME=$(gen_name 'link')
-    mv "$OG_FILENAME" "$TEMP_FILENAME"
-    TITLE="$(get_url_title "$TO_PASTE" || "link")"
-    TITLE="${TITLE//[^a-zA-Z -]/}"
-    mv "$TEMP_FILENAME" "$(gen_name "$TITLE")"
-fi
