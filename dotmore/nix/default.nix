@@ -54,6 +54,7 @@ in pkgs // {
       pkgs-unstable.tealdeer
       proselint
       qpdf
+      recode
       ripgrep
       rlwrap
       ruby
