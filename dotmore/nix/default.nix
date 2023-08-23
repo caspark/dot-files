@@ -52,6 +52,7 @@ in pkgs // {
       pkgs-unstable.topgrade
       pkgs-unstable.tokei
       pkgs-unstable.tealdeer
+      pkgs-unstable.nushell
       proselint
       qpdf
       recode
