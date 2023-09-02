@@ -47,3 +47,5 @@
 [blame]
 	markIgnoredLines = true
 	markUnblamableLines = true
+[init]
+	defaultBranch = master
