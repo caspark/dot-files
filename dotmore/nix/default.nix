@@ -49,6 +49,7 @@ in pkgs // {
       pkgs-unstable.git-lfs
       pkgs-unstable.neovim
       pkgs-unstable.starship
+      pkgs-unstable.skim
       pkgs-unstable.topgrade
       pkgs-unstable.tokei
       pkgs-unstable.tealdeer

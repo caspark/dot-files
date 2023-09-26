@@ -45,7 +45,11 @@
     process = git-lfs filter-process
     required = true
 [blame]
-	markIgnoredLines = true
-	markUnblamableLines = true
+    markIgnoredLines = true
+    markUnblamableLines = true
 [init]
-	defaultBranch = master
+    defaultBranch = master
+[merge]
+    tool = vscode
+[mergetool "vscode"]
+    cmd = code --wait $MERGED
