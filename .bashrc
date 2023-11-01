@@ -159,56 +159,14 @@ pathrm() {
     PATH="$(echo $PATH | sed -e "s;\(^\|:\)${1%/}\(:\|\$\);\1\2;g" -e 's;^:\|:$;;g' -e 's;::;:;g')"
 }
 
-# Ensure that bash is always hooked up to a running ssh-agent
-# Original version at http://www.lofar.org/wiki/doku.php?id=public:ssh-usage-linux
-SSH_AGENT_COUNT=$(pgrep -u $USER ssh-agent | wc -l)
-if (( $SSH_AGENT_COUNT == 0 )); then
-  eval $(ssh-agent 2> /dev/null)
-  # Uncomment below line to debug
-  # echo "Started new ssh-agent: $(env | grep SSH | tr '\n' ' ')"
-elif (( $SSH_AGENT_COUNT == 1 )); then
-  CANDIDATE_SSH_AGENT_PID=$(pgrep -u $USER ssh-agent)
-
-  # Usually the socket is created by the parent process, which has a PID one less than ssh-agent
-  CANDIDATE_SSH_AGENT_PPID=$CANDIDATE_SSH_AGENT_PID
-  ((CANDIDATE_SSH_AGENT_PPID--))
-  CANDIDATE_SSH_AUTH_SOCK=$(find /tmp -user $USER -type s -name agent.$CANDIDATE_SSH_AGENT_PPID 2> /dev/null)
-
-  if [ ! -S "$CANDIDATE_SSH_AUTH_SOCK" ]; then
-    # Didn't find a socket with expected name, so fall back to less rigorous search for socket
-    # TODO: this could find more than 1 socket; we should fail hard here if that happens
-    CANDIDATE_SSH_AUTH_SOCK=$(find /tmp -user $USER -type s -name 'agent.*' 2> /dev/null)
-  fi
-
-  # If we found a socket, set the environment variables
-  if [ -S "$CANDIDATE_SSH_AUTH_SOCK" ]; then
-    export SSH_AGENT_PID=$CANDIDATE_SSH_AGENT_PID
-    export SSH_AUTH_SOCK=$CANDIDATE_SSH_AUTH_SOCK
-    # Try to contact ssh-agent
-    ssh-add -L >/dev/null 2>&1
-    if [ $? -eq 2 ]; then # return code 2 means specifically we can't contact the ssh-agent
-      echo "Failed to contact SSH agent (PID=$CANDIDATE_SSH_AGENT_PID, socket=$CANDIDATE_SSH_AUTH_SOCK)"
-      unset SSH_AGENT_PID
-      unset SSH_AUTH_SOCK
-    else
-      : # do nothing in this happy case (uncomment below line to debug)
-      #echo "Reusing existing ssh-agent (PID=$CANDIDATE_SSH_AGENT_PID, socket=$CANDIDATE_SSH_AUTH_SOCK)"
-    fi
-  else
-    echo "Failed to find existing ssh-agent socket (PID=$CANDIDATE_SSH_AGENT_PID, parent PID=$CANDIDATE_SSH_AGENT_PPID, CANDIDATE_SSH_AUTH_SOCK=${CANDIDATE_SSH_AUTH_SOCK})"
-  fi
-else
-  echo "More than 1 ssh-agent running; not sure which one to connect to so doing nothing"
-fi
-
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 [ -f ~/qmk_utils/activate_wsl.sh ] && source ~/qmk_utils/activate_wsl.sh
 
-. "$HOME/.cargo/env"
+[ -f ~/.cargo/env ] && . "$HOME/.cargo/env"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/caspar/.sdkman/bin/sdkman-init.sh"
 
-source "$HOME/.config/broot/launcher/bash/br"
+[ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
