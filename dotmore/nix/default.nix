@@ -3,7 +3,7 @@ let
   pkgs = import sources.nixpkgs {
     overlays = [
       # adds emacsUnstable and emacsGcc packages
-      (import sources.emacs-overlay)
+      # (import sources.emacs-overlay)
     ];
   };
   pkgs-unstable = import sources.nixpkgs-unstable {};
@@ -23,7 +23,7 @@ in pkgs // {
       direnv
       dos2unix
       dtrx
-      emacsGcc
+      emacs
       entr
       fd
       fish
