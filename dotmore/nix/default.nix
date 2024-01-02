@@ -69,6 +69,7 @@ in pkgs // {
       vmtouch
       wordnet
       xsv
+      zola
     ];
   };
 }
