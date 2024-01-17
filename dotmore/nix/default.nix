@@ -47,6 +47,7 @@ in pkgs // {
       pkgs-unstable.fzf
       pkgs-unstable.git-filter-repo
       pkgs-unstable.git-lfs
+      pkgs-unstable.just
       pkgs-unstable.neovim
       pkgs-unstable.starship
       pkgs-unstable.skim
