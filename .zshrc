@@ -129,6 +129,18 @@ function ghome {
   fi
 }
 
+function gbean {
+  cd ~/src/beans && scripts/tmux.sh "$@"
+}
+
+function gslow {
+  cd ~/src/slowrush && scripts/tmux.sh "$@"
+}
+
+function gwiz {
+  cd ~/src/wizard-pixels && scripts/tmux.sh "$@"
+}
+
 function connect_to_or_start_ssh_agent {
   if [[ -v SSH_TTY ]]; then
     ssh-add -L >/dev/null 2>&1
