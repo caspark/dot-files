@@ -273,7 +273,11 @@ function configure_sourcegraph {
 
 function configure_asdf {
   if [[ -f "$HOME/.asdf/asdf.sh" ]]; then
-    . $HOME/.asdf/asdf.sh
+    . "$HOME/.asdf/asdf.sh"
+  fi
+
+  if [[ -f "$HOME/.asdf/plugins/java/set-java-home.zsh" ]]; then
+    . "$HOME/.asdf/plugins/java/set-java-home.zsh"
   fi
 }
 
