@@ -54,6 +54,7 @@ in pkgs // {
       pkgs-unstable.topgrade
       pkgs-unstable.tokei
       pkgs-unstable.tealdeer
+      pkgs-unstable.tracy
       pkgs-unstable.nushell
       proselint
       qpdf
