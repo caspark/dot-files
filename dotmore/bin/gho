@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Check if a URL is provided
+if [ $# -eq 0 ]; then
+    echo "No Github URL provided"
+    exit 1
+fi
+
+if [[ ! "$1" =~ ^https://github\.com/[^/]+/[^/]+.*$ ]]; then
+    echo "Arg doesn't look like a github url: $1"
+    echo "Aborting!"
+    exit 1
+fi
+
+# Extract the repository name from the URL
+repo_url="$1"
+repo_owner=$(echo $repo_url | sed -E 's|https://github\.com/([^/]+)/[^/]+.*|\1|')
+repo_name=$(echo $repo_url | sed -E 's|https://github\.com/[^/]+/([^/]+).*|\1|')
+
+echo "Found repository $repo_owner/$repo_name"
+
+# Define the target directory
+target_dir="$HOME/srb/$repo_name"
+
+# Clone the repository if it doesn't exist
+if [ ! -d "$target_dir" ]; then
+    git clone "git@github.com:${repo_owner}/${repo_name}.git" "$target_dir"
+fi
+
+cd "$target_dir"
+
+# Add the caspark remote
+git remote add caspark "git@github.com:caspark/$repo_name.git"
+
+# Determine what to open with VS Code
+if [ -f "README.MD" ]; then
+    code . "README.MD"
+elif [ -f "README.md" ]; then
+    code . "README.md"
+elif [ -f "readme.md" ]; then
+    code . "readme.md"
+else
+    # Open the directory
+    code .
+fi
