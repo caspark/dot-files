@@ -314,6 +314,10 @@ function l {
   fi
 }
 
+function mx {
+  chmod +x "$@" && echo "Now executable: $@"
+}
+
 # }}} end functions
 
 # set -x
