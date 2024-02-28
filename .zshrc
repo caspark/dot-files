@@ -3,6 +3,40 @@
 #export TERM=xterm-24bit
 #export COLORTERM=truecolor
 
+move_to_top_of_path() {
+  # Ensure a regex is provided
+  if [[ -z "$1" ]]; then
+    echo "Usage: move_to_top_of_path <regex>"
+    return 1
+  fi
+
+  # Split $PATH into an array
+  local IFS=':'
+  local paths=($PATH)
+  unset IFS
+
+  # Array to hold matched paths
+  local matched_paths=()
+  # Array to hold unmatched paths
+  local unmatched_paths=()
+
+  # Iterate over paths
+  for path in "${paths[@]}"; do
+    if [[ "$path" =~ $1 ]]; then
+      # If path matches regex, prepend to matched_paths array
+      matched_paths=("$path" "${matched_paths[@]}")
+    else
+      # Else, keep in unmatched_paths array
+      unmatched_paths+=("$path")
+    fi
+  done
+
+  # Combine matched_paths and unmatched_paths, update $PATH
+  PATH="${(j/:/)matched_paths}:${(j/:/)unmatched_paths}"
+
+  export PATH
+}
+
 # set up nix (do this early so that nix-installed programs are available)
 # NB: doesn't seem to be necessary on multiuser nix installs
 [ -f ~/.nix-profile/etc/profile.d/nix.sh ] && source ~/.nix-profile/etc/profile.d/nix.sh
@@ -338,6 +372,8 @@ export PATH
 
 if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
+  # make sure things we cargo-install take priority over other things
+  move_to_top_of_path '.*cargo/bin'
 fi
 
 # set up the prompt using https://starship.rs/ (starship is installed via nix)
@@ -349,3 +385,4 @@ fi
 
 SUDO_EDITOR="$(which $EDITOR)"
 export SUDO_EDITOR
+
