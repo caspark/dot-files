@@ -42,19 +42,21 @@ in pkgs // {
       pandoc
       pkgs-unstable.bat
       pkgs-unstable.broot
-      pkgs-unstable.exa
       pkgs-unstable.delta
+      pkgs-unstable.exa
       pkgs-unstable.fzf
       pkgs-unstable.git-filter-repo
       pkgs-unstable.git-lfs
       pkgs-unstable.just
+      pkgs-unstable.maestral
+      pkgs-unstable.maestral-gui
       pkgs-unstable.neovim
-      pkgs-unstable.starship
-      pkgs-unstable.skim
-      pkgs-unstable.topgrade
-      pkgs-unstable.tokei
-      pkgs-unstable.tealdeer
       pkgs-unstable.nushell
+      pkgs-unstable.skim
+      pkgs-unstable.starship
+      pkgs-unstable.tealdeer
+      pkgs-unstable.tokei
+      pkgs-unstable.topgrade
       proselint
       qpdf
       recode
