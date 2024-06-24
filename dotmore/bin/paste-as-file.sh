@@ -46,28 +46,50 @@ if [[ $# -gt 0 ]]; then
     cd "$1"
 fi
 
-# Check if image/png or image/gif is available in clipboard targets
-if xclip -selection clipboard -t TARGETS -o | grep -q -e "image/png" -e "image/gif"; then
-    # Save clipboard contents to file based on format
-    if xclip -selection clipboard -t image/png -o > "$(gen_name 'img' 'png')"; then
-        echo "Image saved as png"
-    elif xclip -selection clipboard -t image/gif -o > $(gen_name 'img' 'gif'); then
-        echo "Image saved as gif"
+if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
+    # wl-paste and wl-copy are part of wl-clipboard package usually
+
+    # Check if image/png or image/gif is available in clipboard targets
+    if wl-paste -l | grep -q -e "image/png" -e "image/gif"; then
+        # Save clipboard contents to file based on format
+        (wl-paste > "$(gen_name 'img' 'png')") || (wl-paste > "$(gen_name 'img' 'gif')")
     else
-        echo "Error saving image"
+        OG_FILENAME=$(gen_name 'clip' 'txt')
+        readonly TO_PASTE="$(wl-paste -t text/plain)"
+        echo "$TO_PASTE" >> "$OG_FILENAME"
+
+        readonly FIRST_URL="$(get_first_url "$TO_PASTE")"
+        if [[ -n "$FIRST_URL" ]]; then
+            TEMP_FILENAME=$(gen_name 'reading-link' 'txt')
+            mv "$OG_FILENAME" "$TEMP_FILENAME"
+            TITLE="$(get_url_title "$FIRST_URL" || echo "link")"
+            TITLE="${TITLE//[^a-zA-Z -]/}"
+            mv "$TEMP_FILENAME" "$(gen_name "$TITLE" 'txt')"
+        fi
     fi
 else
-    OG_FILENAME=$(gen_name 'clip' 'txt')
-    readonly TO_PASTE="$(xclip -sel clip -o)"
-    echo "$TO_PASTE" >> "$OG_FILENAME"
+    # Check if image/png or image/gif is available in clipboard targets
+    if xclip -selection clipboard -t TARGETS -o | grep -q -e "image/png" -e "image/gif"; then
+        # Save clipboard contents to file based on format
+        if xclip -selection clipboard -t image/png -o > "$(gen_name 'img' 'png')"; then
+            echo "Image saved as png"
+        elif xclip -selection clipboard -t image/gif -o > $(gen_name 'img' 'gif'); then
+            echo "Image saved as gif"
+        else
+            echo "Error saving image"
+        fi
+    else
+        OG_FILENAME=$(gen_name 'clip' 'txt')
+        readonly TO_PASTE="$(xclip -sel clip -o)"
+        echo "$TO_PASTE" >> "$OG_FILENAME"
 
-    readonly FIRST_URL="$(get_first_url "$TO_PASTE")"
-    if [[ -n "$FIRST_URL" ]]; then
-        TEMP_FILENAME=$(gen_name 'reading-link' 'txt')
-        mv "$OG_FILENAME" "$TEMP_FILENAME"
-        TITLE="$(get_url_title "$FIRST_URL" || echo "link")"
-        TITLE="${TITLE//[^a-zA-Z -]/}"
-        mv "$TEMP_FILENAME" "$(gen_name "$TITLE" 'txt')"
+        readonly FIRST_URL="$(get_first_url "$TO_PASTE")"
+        if [[ -n "$FIRST_URL" ]]; then
+            TEMP_FILENAME=$(gen_name 'reading-link' 'txt')
+            mv "$OG_FILENAME" "$TEMP_FILENAME"
+            TITLE="$(get_url_title "$FIRST_URL" || echo "link")"
+            TITLE="${TITLE//[^a-zA-Z -]/}"
+            mv "$TEMP_FILENAME" "$(gen_name "$TITLE" 'txt')"
+        fi
     fi
 fi
-
