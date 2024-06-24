@@ -45,6 +45,7 @@ in pkgs // {
       pkgs-unstable.delta
       pkgs-unstable.exa
       pkgs-unstable.fzf
+      pkgs-unstable.fsearch
       pkgs-unstable.git-filter-repo
       pkgs-unstable.git-lfs
       pkgs-unstable.just
