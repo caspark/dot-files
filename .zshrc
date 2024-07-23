@@ -386,3 +386,5 @@ fi
 SUDO_EDITOR="$(which $EDITOR)"
 export SUDO_EDITOR
 
+# fix blurry font in electron apps like vscode under wayland
+[ "$XDG_SESSION_TYPE" = 'wayland' ] && export ELECTRON_OZONE_PLATFORM_HINT=auto
