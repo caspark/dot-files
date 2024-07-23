@@ -355,7 +355,14 @@ function mx {
 # }}} end functions
 
 # set -x
-connect_to_or_start_ssh_agent
+if [ "$DESKTOP_SESSION" = "plasma" ] && [ -f /usr/bin/ksshaskpass ]; then
+  export GIT_ASKPASS=ksshaskpass
+  export SSH_ASKPASS=ksshaskpass
+  export SSH_ASKPASS_REQUIRE=prefer
+else
+  connect_to_or_start_ssh_agent
+fi
+
 adjust_for_wsl
 configure_sourcegraph
 configure_asdf
