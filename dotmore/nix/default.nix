@@ -50,7 +50,7 @@ in pkgs // {
       pkgs-unstable.git-lfs
       pkgs-unstable.just
       pkgs-unstable.maestral
-      pkgs-unstable.maestral-gui
+      # pkgs-unstable.maestral-gui
       pkgs-unstable.neovim
       pkgs-unstable.nushell
       pkgs-unstable.skim
