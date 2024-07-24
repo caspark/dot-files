@@ -27,6 +27,10 @@ shopt -s checkwinsize
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
 
+# set up nix (do this early so that nix-installed programs are available)
+# NB: doesn't seem to be necessary on multiuser nix installs
+[ -f ~/.nix-profile/etc/profile.d/nix.sh ] && source ~/.nix-profile/etc/profile.d/nix.sh
+
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
@@ -132,7 +136,7 @@ function parse_git_dirty {
   function parse_git_branch {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
 }
-export PS1='\[\e[31;1m\]\t \w\[\e[0m\]$(__git_ps1 "[\[\e[0;32m\]%s\[\e[0m\]\[\e[0;33m\]$(parse_git_dirty)\[\e[0m\]]")\[\e[31;1m\] \$ \[\e[0m\]'
+export PS1='\[\e[31;1m\]\t \w\[\e[0m\]\[\e[31;1m\] \$ \[\e[0m\]'
 
 
 # Set the title to the current dir or the current command
