@@ -179,6 +179,8 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
+export EDITOR=nvim
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/caspar/.sdkman/bin/sdkman-init.sh"
