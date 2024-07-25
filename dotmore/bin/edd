@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-exec nix-shell -p edir -p trash-cli --command "edir --trash --group-dirs-first --nolinks $@"
+# --trash relies on trash-cli existing
+edir --trash --group-dirs-first --nolinks "$@"

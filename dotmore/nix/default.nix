@@ -25,6 +25,7 @@ in pkgs // {
       dtrx
       emacs
       entr
+      edir
       fd
       fish
       git
@@ -70,6 +71,7 @@ in pkgs // {
       subversion
       tig
       tmux
+      trash-cli
       vmtouch
       wordnet
       xsv

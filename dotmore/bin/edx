@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-exec env EDITOR="code --wait" edd "$@"
+echo "Opening Code window for graphical editing of " "$@"
+env EDIR_EDITOR="/usr/bin/code --wait" edir --trash --group-dirs-first --nolinks "$@"
+
+echo "All done!"
+
