@@ -115,7 +115,7 @@ alias qmkc="qmk compile --keyboard kinesis/stapelberg --keymap caspark && cp ~/s
 alias gpu="git push -u origin HEAD"
 alias gpuf="git push -u --force-with-lease origin HEAD"
 alias rgc="rg --color=always"
-alias dnf="dnf -C" # use system cache always to avoid unnecessary refreshing
+alias dnfc="dnf -C" # use system cache always to avoid unnecessary refreshing
 
 # {{{ fzf and fzf plugin config
 source ~/.nix-profile/share/fzf/key-bindings.zsh
