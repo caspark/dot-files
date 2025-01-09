@@ -43,7 +43,7 @@ in pkgs // {
       pkgs-unstable.bat
       pkgs-unstable.broot
       pkgs-unstable.delta
-      pkgs-unstable.exa
+      pkgs-unstable.eza
       pkgs-unstable.fzf
       pkgs-unstable.fsearch
       pkgs-unstable.git-filter-repo
