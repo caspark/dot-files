@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# requires udev rules set up to work without sudo - see `headsetcontrol -u` and https://github.com/Sapd/HeadsetControl?tab=readme-ov-file#compiling
+#headsetcontrol -b
+
+output=$(headsetcontrol -b)
+status=$(echo "$output" | grep "Status" | awk '{print $2}')
+
+if [ "$status" == "BATTERY_UNAVAILABLE" ]; then
+    echo "Nova: ??"
+elif [ "$status" == "BATTERY_CHARGING" ]; then
+    level=$(echo "$output" | grep "Level" | awk '{print $2}')
+    echo "Nova^ ${level}"
+else
+    level=$(echo "$output" | grep "Level" | awk '{print $2}')
+    echo "Nova: ${level}"
+fi
