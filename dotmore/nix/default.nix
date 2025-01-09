@@ -37,7 +37,6 @@ in pkgs // {
       libvterm
       lua
       mercurialFull
-      mosh
       niv
       nixfmt
       pandoc
@@ -50,8 +49,10 @@ in pkgs // {
       pkgs-unstable.git-filter-repo
       pkgs-unstable.git-lfs
       pkgs-unstable.just
+      pkgs-unstable.lnav
       pkgs-unstable.maestral
       # pkgs-unstable.maestral-gui
+      pkgs-unstable.multitail
       pkgs-unstable.neovim
       pkgs-unstable.nushell
       pkgs-unstable.skim
