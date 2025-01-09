@@ -36,7 +36,7 @@
 [push]
     default = upstream
 [core]
-    excludesfile = /home/caspar/.gitignore_global
+    excludesfile = /home/ckrieger/.gitignore_global
 [pull]
     rebase = true
 [filter "lfs"]
