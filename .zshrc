@@ -353,6 +353,73 @@ function mx {
   chmod +x "$@" && echo "Now executable: $@"
 }
 
+# Use llm tool to generate commands and prompt to run them (requires uv for uvx)
+# https://gist.github.com/montasaurus/5ccbe453ef863f702291e763b1b63daf
+# https://docs.astral.sh/uv/
+function llmc {
+    local system_prompt='Output a command that I can run in a ZSH terminal on Linux to accomplish the following task. Try to make the command self-documenting, using the long version of flags where possible. Output the command first enclosed in a "```zsh" codeblock followed by a concise explanation of how it accomplishes it.'
+    local temp_file=$(mktemp)
+    local capturing=true
+    local command_buffer=""
+    local first_line=true
+    local cleaned_up=false # Flag to indicate whether cleanup has been run
+    local copy_command # Initialize without setting a default
+
+    # Check if Oh-My-Zsh is installed, use clipcopy; otherwise, check for xsel
+    if [[ -n "$ZSH" ]]; then
+        copy_command="clipcopy" # Use clipcopy if Oh-My-Zsh is detected
+    elif command -v xsel &>/dev/null; then
+        copy_command="xsel --clipboard --input" # Fallback to xsel if available
+    else
+        echo "Neither clipcopy nor xsel is available for clipboard operations."
+        return 1 # Exit the function with an error status if no suitable command is found
+    fi
+
+    cleanup() {
+        # Only run cleanup if it hasn't been done yet
+        if [[ "$cleaned_up" == false ]]; then
+            cleaned_up=true # Set the flag to prevent duplicate cleanup
+
+            # Check if the temporary file exists before attempting to read from it
+            if [[ -f "$temp_file" ]]; then
+                while IFS= read -r line; do
+                    if [[ "$line" == '```zsh' ]]; then
+                        command_buffer=""
+                        first_line=true
+                    elif [[ "$line" == '```' && "$capturing" == true ]]; then
+                        if [[ "$first_line" == true ]]; then
+                            echo -n "$command_buffer" | $copy_command
+                        else
+                            echo -n "${command_buffer//$'\n'/\\n}" | $copy_command
+                        fi
+                        break
+                    elif [[ "$capturing" == true ]]; then
+                        if [[ "$first_line" == false ]]; then
+                            command_buffer+=$'\n'
+                        fi
+                        command_buffer+="$line"
+                        first_line=false
+                    fi
+                done <"$temp_file"
+            fi
+
+            # Always attempt to remove the temporary file if it exists
+            [[ -f "$temp_file" ]] && rm "$temp_file"
+
+            # Reset the signal trap to the default behavior to clean up resources
+            trap - SIGINT
+        fi
+    }
+
+    # Set the trap for cleanup on SIGINT
+    trap cleanup SIGINT
+
+    uvx llm -s "$system_prompt" "$1" | tee >(cat >"$temp_file")
+
+    # Ensure cleanup is performed if not already done by trap
+    cleanup
+}
+
 # }}} end functions
 
 # set -x
