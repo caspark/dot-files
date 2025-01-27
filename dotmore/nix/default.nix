@@ -38,7 +38,7 @@ in pkgs // {
       lua
       mercurialFull
       niv
-      nixfmt
+      nixfmt-classic
       pandoc
       pkgs-unstable.bat
       pkgs-unstable.broot
