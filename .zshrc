@@ -463,3 +463,11 @@ export SUDO_EDITOR
 
 # fix blurry font in electron apps like vscode under wayland
 [ "$XDG_SESSION_TYPE" = 'wayland' ] && export ELECTRON_OZONE_PLATFORM_HINT=auto
+
+if [[ -d "$HOME/Android/" && -d "$HOME/opt/android-studio/" ]]; then
+  export JAVA_HOME="$HOME/opt/android-studio/jbr/"
+  export ANDROID_HOME="$HOME/Android/Sdk"
+  export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
+  export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/28.0.12916984"
+  export PATH="$PATH:$ANDROID_HOME/emulator"
+fi
