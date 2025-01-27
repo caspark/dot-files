@@ -35,7 +35,7 @@ To update to latest versions of all nix packages from release-20.09 branch:
 
 ``` shell
 cd "$HOME/dotmore/"
-niv update nixpkgs -b release-23.05
+niv update nixpkgs -b release-24.11
 # (then install packages again)
 ```
 
