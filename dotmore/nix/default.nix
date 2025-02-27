@@ -76,6 +76,7 @@ in pkgs // {
       vmtouch
       wordnet
       xsv
+      zellij
     ];
   };
 }
