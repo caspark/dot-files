@@ -471,3 +471,6 @@ if [[ -d "$HOME/Android/" && -d "$HOME/opt/android-studio/" ]]; then
   export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/28.0.12916984"
   export PATH="$PATH:$ANDROID_HOME/emulator"
 fi
+
+[ -f "$HOME/.grit/bin/env" ] && source "$HOME/.grit/bin/env"
+

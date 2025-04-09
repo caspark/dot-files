@@ -186,3 +186,5 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/caspar/.sdkman/bin/sdkman-init.sh"
 
 [ -f "$HOME/.config/broot/launcher/bash/br" ] && source "$HOME/.config/broot/launcher/bash/br"
+
+[ -f "$HOME/.grit/bin/env" ] && source "$HOME/.grit/bin/env"
