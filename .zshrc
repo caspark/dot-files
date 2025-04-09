@@ -474,3 +474,8 @@ fi
 
 [ -f "$HOME/.grit/bin/env" ] && source "$HOME/.grit/bin/env"
 
+if [ -d "$HOME/.wasmtime" ]; then
+  export WASMTIME_HOME="$HOME/.wasmtime"
+  export PATH="$WASMTIME_HOME/bin:$PATH"
+fi
+
