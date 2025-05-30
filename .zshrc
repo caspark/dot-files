@@ -43,7 +43,7 @@ move_to_top_of_path() {
 
 # {{{ Antigen config - load whatever plugins
 # uncomment below line to enable logging - useful if a plugin install fails
-#ANTIGEN_LOG=/tmp/zsh-antigen.log
+# ANTIGEN_LOG=/tmp/zsh-antigen.log
 source ~/.nix-profile/share/antigen/antigen.zsh
 
 antigen use oh-my-zsh
@@ -88,6 +88,9 @@ antigen bundle zsh-users/zsh-history-substring-search
 
 # https://github.com/zdharma/fast-syntax-highlighting
 antigen bundle zdharma/fast-syntax-highlighting --branch=main
+
+# https://github.com/day50-dev/Zummoner
+antigen bundle day50-dev/Zummoner --branch=main
 
 antigen apply
 # }}} end plugins

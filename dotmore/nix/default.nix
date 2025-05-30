@@ -12,7 +12,7 @@ in pkgs // {
     name = "ckrieger-devtools";
     paths = with pkgs; [
       act
-      antigen
+      pkgs-unstable.antigen
       aspell
       aspellDicts.en
       aspellDicts.en-computers
