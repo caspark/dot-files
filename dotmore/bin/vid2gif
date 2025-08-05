@@ -1,0 +1,204 @@
+#!/usr/bin/env python3
+
+"""
+video2gif - Convert video files to optimized GIFs for web use
+Usage: video2gif [-s|--size-limit] <input_video>
+"""
+
+import argparse
+import os
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+
+def run_command(cmd, silent=True):
+    """Run a command and return success status and stderr."""
+    try:
+        if silent:
+            result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+            return result.returncode == 0, result.stderr
+        else:
+            result = subprocess.run(cmd, shell=True)
+            return result.returncode == 0, ""
+    except Exception as e:
+        return False, str(e)
+
+
+def get_file_size_mb(filepath):
+    """Get file size in MB."""
+    try:
+        size_bytes = os.path.getsize(filepath)
+        return size_bytes / (1024 * 1024)
+    except OSError:
+        return 0
+
+
+def get_human_readable_size(filepath):
+    """Get human readable file size."""
+    try:
+        # Use du command for consistency with bash version
+        result = subprocess.run(f"du -h '{filepath}'", shell=True, capture_output=True, text=True)
+        if result.returncode == 0:
+            return result.stdout.split()[0]
+    except Exception:
+        pass
+    return "?"
+
+
+def create_gif(input_file, output_file, scale_width):
+    """Create GIF with given scale using two-pass approach."""
+    with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as palette_file:
+        palette_path = palette_file.name
+
+    try:
+        # Generate palette (first pass)
+        palette_cmd = (
+            f"ffmpeg -v warning -i '{input_file}' "
+            f"-vf 'fps=24,scale={scale_width}:-1:flags=lanczos,palettegen=stats_mode=diff' "
+            f"-y '{palette_path}'"
+        )
+
+        success, stderr = run_command(palette_cmd)
+        if not success:
+            print(f"Error generating palette: {stderr}")
+            return False
+
+        # Create GIF using palette (second pass)
+        gif_cmd = (
+            f"ffmpeg -v warning -i '{input_file}' -i '{palette_path}' "
+            f"-lavfi 'fps=24,scale={scale_width}:-1:flags=lanczos[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle' "
+            f"-y '{output_file}'"
+        )
+
+        success, stderr = run_command(gif_cmd)
+        if not success:
+            print(f"Error creating GIF: {stderr}")
+            return False
+
+        return True
+
+    finally:
+        # Clean up palette file
+        try:
+            os.unlink(palette_path)
+        except OSError:
+            pass
+
+
+def copy_to_clipboard(text):
+    """Copy text to clipboard using wl-copy."""
+    try:
+        result = subprocess.run(
+            ["wl-copy"], 
+            input=text, 
+            text=True, 
+            capture_output=True, 
+            timeout=0.1  # 100ms timeout
+        )
+        return result.returncode == 0
+    except (subprocess.SubprocessError, FileNotFoundError, subprocess.TimeoutExpired):
+        return False
+
+
+def open_file(filepath):
+    """Open file with default application using xdg-open."""
+    try:
+        subprocess.Popen(["xdg-open", filepath], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return True
+    except (subprocess.SubprocessError, FileNotFoundError):
+        return False
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Convert video files to optimized GIFs for web use",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument("input_video", help="Input video file")
+    parser.add_argument(
+        "-s", "--size-limit",
+        action="store_true",
+        help="Keep output under 10MB by adjusting scale"
+    )
+
+    args = parser.parse_args()
+
+    # Check if input file exists
+    input_file = args.input_video
+    if not os.path.isfile(input_file):
+        print(f"Error: File '{input_file}' not found")
+        sys.exit(1)
+
+    # Generate output filename
+    input_path = Path(input_file)
+    output_file = str(input_path.with_suffix('.gif'))
+
+    # Warn if input and output are the same
+    if input_file == output_file:
+        print(f"Warning: Input file '{input_file}' is already a GIF. Converting GIF to GIF.")
+        print("This may result in quality loss. Consider using a different input format.")
+
+    print(f"Converting '{input_file}' to '{output_file}'...")
+
+    # Start with default width, then reduce if size limit is enabled
+    scale_width = 640
+    max_size_bytes = 10 * 1024 * 1024  # 10MB in bytes
+
+    while True:
+        print(f"Trying scale width: {scale_width}px...")
+
+        if not create_gif(input_file, output_file, scale_width):
+            print("Error: Failed to create GIF")
+            sys.exit(1)
+
+        # Check if size limit is enabled and file exists
+        if args.size_limit and os.path.isfile(output_file):
+            file_size_bytes = os.path.getsize(output_file)
+
+            if file_size_bytes > max_size_bytes:
+                size_mb = file_size_bytes / (1024 * 1024)
+                print(f"File size {size_mb:.1f}MB exceeds 10MB limit, reducing scale...")
+
+                # Reduce scale by 20%
+                scale_width = int(scale_width * 0.8)
+
+                # Prevent infinite loop - minimum width of 160px
+                if scale_width < 160:
+                    print("Warning: Reached minimum scale (160px), keeping current file")
+                    break
+
+                continue
+            else:
+                print("File size OK (under 10MB limit)")
+                break
+        else:
+            # No size limit or file doesn't exist, we're done
+            break
+
+    if os.path.isfile(output_file):
+        print(f"Successfully created: {output_file}")
+
+        # Show file sizes for comparison
+        input_size = get_human_readable_size(input_file)
+        output_size = get_human_readable_size(output_file)
+        print(f"Original: {input_size} | GIF: {output_size}")
+
+        # Copy filename to clipboard and print it
+        print(output_file)
+        if copy_to_clipboard(output_file):
+            pass  # Success, no message needed
+        else:
+            print("Warning: Failed to copy to clipboard")
+
+        # Open the GIF file
+        if not open_file(output_file):
+            print("Warning: xdg-open not found, cannot open GIF automatically")
+    else:
+        print("Error: Failed to create GIF")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
