@@ -331,11 +331,11 @@ function sb {
   cd "$HOME/srb/$(ls -1 ~/srb/ | fzf)"
 }
 
-function bd {
-  # bd = background disown
-  $@ &> /dev/null &
-  disown
-}
+# function bd {
+#   # bd = background disown
+#   $@ &> /dev/null &
+#   disown
+# }
 
 function ep {
   dtrx "$@"
@@ -481,4 +481,7 @@ if [ -d "$HOME/.wasmtime" ]; then
   export WASMTIME_HOME="$HOME/.wasmtime"
   export PATH="$WASMTIME_HOME/bin:$PATH"
 fi
+
+# wt: interactive git worktree switcher via fzf (run `wt` in any git repo)
+[ -f "$HOME/dotmore/bin/wt.zsh" ] && source "$HOME/dotmore/bin/wt.zsh"
 
