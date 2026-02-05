@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Opening Code window for graphical editing of " "$@"
-env EDIR_EDITOR="/usr/bin/code --wait" edir --trash --group-dirs-first --nolinks "$@"
+env EDIR_EDITOR="/home/ckrieger/.local/bin/zed --wait --new" edir --trash --group-dirs-first --nolinks "$@"
 
 echo "All done!"
 
