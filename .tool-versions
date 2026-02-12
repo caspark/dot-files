@@ -1,7 +1,7 @@
 elixir 1.15.5-otp-26
 erlang 26.0.2
 golang 1.25.6
-nodejs 21.6.1
+nodejs 22.22.0
 python 3.9.9
 ruby 2.6.5
 yarn 1.22.17
