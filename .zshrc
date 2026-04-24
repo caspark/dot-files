@@ -60,7 +60,7 @@ export NVM_LAZY_LOAD=true
 antigen bundle lukechilds/zsh-nvm
 
 # https://github.com/wfxr/forgit
-antigen bundle wfxr/forgit
+antigen bundle wfxr/forgit@main
 # {{{ forgit's FZF commands quick reference:
 # * git log -> glo
 # * git diff -> gd
@@ -312,6 +312,8 @@ function configure_sourcegraph {
 function configure_asdf {
   if [[ -f "$HOME/.asdf/asdf.sh" ]]; then
     . "$HOME/.asdf/asdf.sh"
+  elif [[ -d "$HOME/.asdf/shims" ]]; then
+    export PATH="$HOME/.asdf/shims:$PATH"
   fi
 
   if [[ -f "$HOME/.asdf/plugins/java/set-java-home.zsh" ]]; then
@@ -430,6 +432,8 @@ if [ "$DESKTOP_SESSION" = "plasma" ] && [ -f /usr/bin/ksshaskpass ]; then
   export GIT_ASKPASS=ksshaskpass
   export SSH_ASKPASS=ksshaskpass
   export SSH_ASKPASS_REQUIRE=prefer
+elif [ "$(uname)" = "Darwin" ]; then
+  # no need to run ssh agent manually on macos
 else
   connect_to_or_start_ssh_agent
 fi
