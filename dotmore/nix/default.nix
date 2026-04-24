@@ -29,12 +29,10 @@ in pkgs // {
       fd
       fish
       git
-      gitAndTools.git-extras
       graphviz
       htop
       ispell
       jq
-      libvterm
       lua
       mercurialFull
       niv
@@ -45,7 +43,6 @@ in pkgs // {
       pkgs-unstable.delta
       pkgs-unstable.eza
       pkgs-unstable.fzf
-      pkgs-unstable.fsearch
       pkgs-unstable.gh
       pkgs-unstable.git-filter-repo
       pkgs-unstable.git-lfs
@@ -76,7 +73,6 @@ in pkgs // {
       trash-cli
       vmtouch
       wordnet
-      xsv
       zellij
     ];
   };
