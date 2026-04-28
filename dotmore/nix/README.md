@@ -31,11 +31,11 @@ nix-env -f "$HOME/dotmore/nix" -iA ckrieger-devtools
 ../bin/sync-nix.sh
 ```
 
-To update to latest versions of all nix packages from release-20.09 branch:
+To update to latest versions of all nix packages from release-25.11 branch:
 
 ``` shell
 cd "$HOME/dotmore/"
-niv update nixpkgs -b release-24.11
+niv update nixpkgs -b release-25.11
 # (then install packages again)
 ```
 

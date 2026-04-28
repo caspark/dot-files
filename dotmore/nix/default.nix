@@ -20,14 +20,12 @@ in pkgs // {
       cloc
       colordiff
       cvs
-      direnv
       dos2unix
       dtrx
       emacs
       entr
       edir
       fd
-      fish
       git
       graphviz
       htop
@@ -41,7 +39,9 @@ in pkgs // {
       pkgs-unstable.bat
       pkgs-unstable.broot
       pkgs-unstable.delta
+      pkgs-unstable.direnv
       pkgs-unstable.eza
+      pkgs-unstable.fish
       pkgs-unstable.fzf
       pkgs-unstable.gh
       pkgs-unstable.git-filter-repo
