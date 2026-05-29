@@ -7,6 +7,20 @@ let
     ];
   };
   pkgs-unstable = import sources.nixpkgs-unstable {};
+
+  localConfig =
+    if builtins.pathExists ./local.nix
+    then import ./local.nix
+    else {};
+
+  enableMaestral = localConfig.enableMaestral or (!pkgs.stdenv.hostPlatform.isDarwin);
+
+  # direnv 2.37.1's upstream zsh integration test currently hangs on macOS
+  # during nix builds. We only need the binary in this personal tool bundle, so
+  # skip the package test suite to let sync-nix.sh complete.
+  direnvNoCheck = pkgs-unstable.direnv.overrideAttrs (_: {
+    doCheck = false;
+  });
 in pkgs // {
   ckrieger-devtools = pkgs.buildEnv {
     name = "ckrieger-devtools";
@@ -39,7 +53,7 @@ in pkgs // {
       pkgs-unstable.bat
       pkgs-unstable.broot
       pkgs-unstable.delta
-      pkgs-unstable.direnv
+      direnvNoCheck
       pkgs-unstable.eza
       pkgs-unstable.fish
       pkgs-unstable.fzf
@@ -48,8 +62,6 @@ in pkgs // {
       pkgs-unstable.git-lfs
       pkgs-unstable.just
       pkgs-unstable.lnav
-      pkgs-unstable.maestral
-      # pkgs-unstable.maestral-gui
       pkgs-unstable.multitail
       pkgs-unstable.neovim
       pkgs-unstable.nushell
@@ -74,6 +86,9 @@ in pkgs // {
       vmtouch
       wordnet
       zellij
+    ] ++ lib.optionals enableMaestral [
+      pkgs-unstable.maestral
+      pkgs-unstable.maestral-gui
     ];
   };
 }

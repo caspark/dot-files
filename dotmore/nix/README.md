@@ -21,6 +21,30 @@ Read more:
 * To make the build reproducible, [niv](https://github.com/nmattia/niv) is used
   to pin the nixpkgs channel (and any other inputs) to specific versions.
 
+## Per-machine local config
+
+`default.nix` optionally reads `nix/local.nix` for machine-specific switches. This
+file is intended to be local to one machine rather than shared everywhere.
+
+Maestral is enabled by default on non-Darwin systems, and disabled by default on
+Darwin because `maestral-gui` is not available there. To disable it on any
+machine, create `nix/local.nix` like this:
+
+``` nix
+{
+  enableMaestral = false;
+}
+```
+
+To install Maestral on another supported machine, either omit `nix/local.nix` or
+set:
+
+``` nix
+{
+  enableMaestral = true;
+}
+```
+
 ## Using
 
 Install the packages by passing this directory (i.e. `default.nix`) as the expression containing derivations to build, and select just the ckrieger-devtools attribute:
