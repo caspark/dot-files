@@ -42,3 +42,9 @@
 !/.sdkman/etc/config
 !/.toolversions
 !/.zshrc
+
+# generated noise, even inside unignored directories
+.DS_Store
+**/.DS_Store
+__pycache__/
+**/__pycache__/
