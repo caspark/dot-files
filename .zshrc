@@ -103,6 +103,19 @@ bindkey -M emacs '^N' history-substring-search-down
 
 # general config
 export EDITOR=nvim
+export SCCACHE_CACHE_SIZE=500G
+
+# Homebrew LLVM has WebAssembly target support; Apple clang does not.
+if [[ "$OSTYPE" == darwin* ]]; then
+  for llvm_prefix in /opt/homebrew/opt/llvm /usr/local/opt/llvm; do
+    if [[ -x "$llvm_prefix/bin/clang" ]]; then
+      export CC_wasm32_unknown_unknown="$llvm_prefix/bin/clang"
+      export AR_wasm32_unknown_unknown="$llvm_prefix/bin/llvm-ar"
+      break
+    fi
+  done
+  unset llvm_prefix
+fi
 
 # aliases that don't have a better home
 alias e="$EDITOR"
