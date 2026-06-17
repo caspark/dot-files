@@ -38,8 +38,11 @@ move_to_top_of_path() {
 }
 
 # set up nix (do this early so that nix-installed programs are available)
-# NB: doesn't seem to be necessary on multiuser nix installs
-[ -f ~/.nix-profile/etc/profile.d/nix.sh ] && source ~/.nix-profile/etc/profile.d/nix.sh
+# Single-user installs put nix.sh under the user profile; multi-user installs
+# put nix-daemon.sh under the default profile.
+if ! { [[ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ]] && source "$HOME/.nix-profile/etc/profile.d/nix.sh"; }; then
+  [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]] && source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
 
 # {{{ Antigen config - load whatever plugins
 # uncomment below line to enable logging - useful if a plugin install fails
@@ -47,6 +50,11 @@ move_to_top_of_path() {
 source ~/.nix-profile/share/antigen/antigen.zsh
 
 antigen use oh-my-zsh
+
+# Antigen can source plugins without first letting Oh My Zsh create its cache
+# directories. Make this explicit before plugins such as docker write completions.
+export ZSH_CACHE_DIR="${ZSH_CACHE_DIR:-${XDG_CACHE_HOME:-$HOME/.cache}/oh-my-zsh}"
+mkdir -p "$ZSH_CACHE_DIR/completions"
 
 # oh my zsh plugins:
 antigen bundle colored-man-pages
