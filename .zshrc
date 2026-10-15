@@ -499,6 +499,12 @@ if [[ -d "$HOME/Android/" && -d "$HOME/opt/android-studio/" ]]; then
   export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/28.0.12916984"
   export PATH="$PATH:$ANDROID_HOME/emulator"
 fi
+# android dev stuff on macos
+if [[ -d "$HOME/Library/Android/sdk" && -d "/Applications/Android Studio.app/Contents/jbr/Contents/Home" ]]; then
+ export ANDROID_HOME="$HOME/Library/Android/sdk"
+ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+ export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+fi
 
 [ -f "$HOME/.grit/bin/env" ] && source "$HOME/.grit/bin/env"
 
