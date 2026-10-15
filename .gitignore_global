@@ -3,3 +3,4 @@
 *.code-workspace
 .aider*
 .DS_Store
+.pi-subagents/
