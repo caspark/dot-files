@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+export STEAMWORKS_SDK="$HOME/opt/steamworks-sdk"
+export STEAMWORKS_SDK_USERNAME=caspark
+
+startup_dir="$(mktemp -d "${TMPDIR:-/tmp}/steamworks-shell.XXXXXXXX")"
+trap 'rm -rf -- "$startup_dir"' EXIT
+
+export STEAMWORKS_SHELL_ORIGINAL_ZDOTDIR="${ZDOTDIR:-$HOME}"
+export STEAMWORKS_SHELL_STARTUP_DIR="$startup_dir"
+
+# Forward normal startup files, then install the prefix after the prompt theme
+cat > "$startup_dir/.zshenv" <<'ZSH'
+ZDOTDIR="$STEAMWORKS_SHELL_ORIGINAL_ZDOTDIR"
+if [[ -r "$ZDOTDIR/.zshenv" ]]; then
+    source "$ZDOTDIR/.zshenv"
+fi
+STEAMWORKS_SHELL_ORIGINAL_ZDOTDIR="${ZDOTDIR:-$HOME}"
+ZDOTDIR="$STEAMWORKS_SHELL_STARTUP_DIR"
+ZSH
+
+cat > "$startup_dir/.zshrc" <<'ZSH'
+ZDOTDIR="$STEAMWORKS_SHELL_ORIGINAL_ZDOTDIR"
+if [[ -r "$ZDOTDIR/.zshrc" ]]; then
+    source "$ZDOTDIR/.zshrc"
+fi
+unset STEAMWORKS_SHELL_ORIGINAL_ZDOTDIR STEAMWORKS_SHELL_STARTUP_DIR
+
+autoload -Uz add-zsh-hook
+_steamworks_shell_prompt() {
+    if [[ "$PROMPT" != '[steamworks-shell] '* ]]; then
+        PROMPT="[steamworks-shell] $PROMPT"
+    fi
+}
+add-zsh-hook precmd _steamworks_shell_prompt
+_steamworks_shell_prompt
+ZSH
+
+ZDOTDIR="$startup_dir" zsh -i
