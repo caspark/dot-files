@@ -2,17 +2,95 @@
 
 set -euo pipefail
 
-export STEAMWORKS_SDK="$HOME/opt/steamworks-sdk"
-export STEAMWORKS_SDK_USERNAME=caspark
+export STEAMWORKS_SDK="${STEAMWORKS_SDK:-$HOME/opt/steamworks-sdk}"
+export STEAMWORKS_SDK_USERNAME="${STEAMWORKS_SDK_USERNAME:-slowrush_steamworks_builder}"
+
+case "$STEAMWORKS_SDK_USERNAME" in
+    +*|*[[:space:][:cntrl:]]*)
+        printf 'Invalid Steam login username: use an account name without whitespace or a leading +.\n' >&2
+        exit 1
+        ;;
+esac
+
+sdk_path="$STEAMWORKS_SDK"
+case "$(uname -s)" in
+    Darwin) builder=builder_osx ;;
+    Linux)
+        case "$(uname -m)" in
+            aarch64|arm64) builder=builder_linuxarm64 ;;
+            *) builder=builder_linux ;;
+        esac
+        ;;
+    MINGW*|MSYS*|CYGWIN*)
+        builder=builder
+        sdk_path="$(cygpath -u "$sdk_path")"
+        ;;
+    *)
+        printf 'Steamworks shell requires Linux, macOS, or Git Bash on Windows.\n' >&2
+        exit 1
+        ;;
+esac
+
+if [[ ! -d "$sdk_path/tools/ContentBuilder/$builder" ]]; then
+    printf 'SteamCMD directory is missing: %s/tools/ContentBuilder/%s\n' "$sdk_path" "$builder" >&2
+    printf 'Set STEAMWORKS_SDK to the Steamworks SDK root.\n' >&2
+    exit 1
+fi
+sdk_path="$(cd -- "$sdk_path" && pwd)"
+export STEAMWORKS_SDK="$sdk_path"
+steamcmd_dir="$sdk_path/tools/ContentBuilder/$builder"
+steamcmd="$steamcmd_dir/steamcmd.sh"
+if [[ "$builder" == builder ]]; then
+    steamcmd="$steamcmd_dir/steamcmd.exe"
+    # Native Windows tools need a Windows path, not the Git Bash /c/... form
+    STEAMWORKS_SDK="$(cygpath -m "$sdk_path")"
+fi
+if [[ ! -f "$steamcmd" ]]; then
+    printf 'SteamCMD is missing: %s\n' "$steamcmd" >&2
+    exit 1
+fi
+
+# SDK archives can lose Unix execute permissions when extracted or copied
+if [[ "$builder" != builder ]]; then
+    case "$builder" in
+        builder_linux) steamcmd_binary="$steamcmd_dir/linux32/steamcmd" ;;
+        builder_linuxarm64) steamcmd_binary="$steamcmd_dir/linuxarm64/steamcmd" ;;
+        builder_osx)
+            steamcmd_binary="$steamcmd_dir/steamcmd"
+            if [[ ! -f "$steamcmd_binary" ]]; then
+                steamcmd_binary="$steamcmd_dir/Steam.AppBundle/Steam/Contents/MacOS/steamcmd"
+            fi
+            ;;
+    esac
+    for executable in "$steamcmd" "$steamcmd_binary"; do
+        if [[ -f "$executable" && ! -x "$executable" ]]; then
+            if ! chmod u+x "$executable"; then
+                printf 'Cannot make SteamCMD executable: %s\n' "$executable" >&2
+                exit 1
+            fi
+        fi
+    done
+fi
+
+printf 'Checking Steam login for %s; enter credentials or Steam Guard approval if requested.\n' "$STEAMWORKS_SDK_USERNAME"
+# Keep SteamCMD's cached credentials in the same location used by the SDK tools
+if ! (
+    cd -- "$steamcmd_dir"
+    "$steamcmd" +@ShutdownOnFailedCommand 1 +@NoPromptForPassword 0 +login "$STEAMWORKS_SDK_USERNAME" +quit
+); then
+    printf 'Steam login failed; the Steamworks shell was not opened.\n' >&2
+    exit 1
+fi
 
 startup_dir="$(mktemp -d "${TMPDIR:-/tmp}/steamworks-shell.XXXXXXXX")"
 trap 'rm -rf -- "$startup_dir"' EXIT
 
-export STEAMWORKS_SHELL_ORIGINAL_ZDOTDIR="${ZDOTDIR:-$HOME}"
-export STEAMWORKS_SHELL_STARTUP_DIR="$startup_dir"
+if [[ "${SHELL:-}" == */zsh || "${SHELL:-}" == zsh ]] && command -v zsh >/dev/null 2>&1; then
+    export STEAMWORKS_SHELL_ORIGINAL_ZDOTDIR="${ZDOTDIR:-$HOME}"
+    export STEAMWORKS_SHELL_STARTUP_DIR="$startup_dir"
 
-# Forward normal startup files, then install the prefix after the prompt theme
-cat > "$startup_dir/.zshenv" <<'ZSH'
+    # Forward normal startup files, then install the prefix after the prompt theme
+    cat > "$startup_dir/.zshenv" <<'ZSH'
 ZDOTDIR="$STEAMWORKS_SHELL_ORIGINAL_ZDOTDIR"
 if [[ -r "$ZDOTDIR/.zshenv" ]]; then
     source "$ZDOTDIR/.zshenv"
@@ -21,7 +99,7 @@ STEAMWORKS_SHELL_ORIGINAL_ZDOTDIR="${ZDOTDIR:-$HOME}"
 ZDOTDIR="$STEAMWORKS_SHELL_STARTUP_DIR"
 ZSH
 
-cat > "$startup_dir/.zshrc" <<'ZSH'
+    cat > "$startup_dir/.zshrc" <<'ZSH'
 ZDOTDIR="$STEAMWORKS_SHELL_ORIGINAL_ZDOTDIR"
 if [[ -r "$ZDOTDIR/.zshrc" ]]; then
     source "$ZDOTDIR/.zshrc"
@@ -38,4 +116,25 @@ add-zsh-hook precmd _steamworks_shell_prompt
 _steamworks_shell_prompt
 ZSH
 
-ZDOTDIR="$startup_dir" zsh -i
+    ZDOTDIR="$startup_dir" zsh -i
+else
+    cat > "$startup_dir/bashrc" <<'BASH'
+if [[ -r "$HOME/.bashrc" ]]; then
+    source "$HOME/.bashrc"
+fi
+
+_steamworks_shell_prompt() {
+    if [[ "$PS1" != '[steamworks-shell] '* ]]; then
+        PS1="[steamworks-shell] $PS1"
+    fi
+}
+if [[ "$(declare -p PROMPT_COMMAND 2>/dev/null)" == 'declare -a '* ]]; then
+    PROMPT_COMMAND+=(_steamworks_shell_prompt)
+else
+    PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}_steamworks_shell_prompt"
+fi
+_steamworks_shell_prompt
+BASH
+
+    bash --rcfile "$startup_dir/bashrc" -i
+fi
