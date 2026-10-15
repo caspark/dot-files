@@ -204,12 +204,30 @@ function connect_to_or_start_ssh_agent {
   if [[ -v SSH_TTY ]]; then
     ssh-add -L >/dev/null 2>&1
     local CONTACT_STATUS="$?"
-    if [[ "$CONTACT_STATUS" -eq 0 ]]; then
+    if [[ "$CONTACT_STATUS" -ne 2 ]]; then
       # echo "DEBUG: Detected SSH connection; reusing forwarded SSH agent"
+      return
     else
       # echo "DEBUG: Detected SSH connection but failed to contact SSH agent! Return code was $contact_status"
     fi
-    return
+  fi
+
+  # Prefer the systemd user ssh-agent socket when present. Its socket lives under
+  # $XDG_RUNTIME_DIR rather than /tmp, and ssh-agent -D does not set a useful
+  # SSH_AGENT_PID for child shells.
+  local SYSTEMD_SSH_AUTH_SOCK="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/ssh-agent.socket"
+  if [[ -S "$SYSTEMD_SSH_AUTH_SOCK" ]]; then
+    export SSH_AUTH_SOCK="$SYSTEMD_SSH_AUTH_SOCK"
+    unset SSH_AGENT_PID
+    ssh-add -L >/dev/null 2>&1
+
+    # return code 2 means specifically we can't contact the ssh-agent
+    if [[ "$?" -ne 2 ]]; then
+      return
+    fi
+
+    echo "ERROR: Failed to contact systemd SSH agent socket ($SYSTEMD_SSH_AUTH_SOCK)"
+    unset SSH_AUTH_SOCK
   fi
 
   local SSH_AGENT_PIDS="$(pgrep -u $USER ssh-agent | tr '\n' ' ')"
